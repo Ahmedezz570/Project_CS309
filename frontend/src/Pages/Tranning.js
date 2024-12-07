@@ -1,8 +1,8 @@
 import React from 'react'
-import './CSS/Tranning';
+import './CSS/Tranning.css';
 const Tranning = () => {
     return (
-      <div>Navbar</div>
+      <div>Tranning</div>
     )
   }
   

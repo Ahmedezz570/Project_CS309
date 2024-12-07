@@ -1,8 +1,8 @@
 import React from 'react'
-import './CSS/Login';
+import './CSS/Login.css';
 const Login = () => {
     return (
-      <div>Navbar</div>
+      <div>Login</div>
     )
   }
   

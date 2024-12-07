@@ -1,8 +1,8 @@
 import React from 'react'
-import './CSS/Register';
+import './CSS/Register.css';
 const Register = () => {
     return (
-      <div>Navbar</div>
+      <div>Register</div>
     )
   }
   

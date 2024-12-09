@@ -10,11 +10,14 @@ import Register from './Pages/Register';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App">     
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route path="/" element={<Shop />} />
+          {/*  just for  test the images in public folder and the test data in datatest.js in src =================================           */}
+        <Route path="/" element={<img src="/T_shirts/rm1.jpg" alt="rm" />} />
+        {/* ========================= */}
+          <Route path="/shop" element={<Shop />} />
           <Route path="/special" element={<Special />} />
           <Route path="/tranning" element={<Tranning />} />
           <Route path="/cart" element={<Cart />} />
@@ -22,6 +25,7 @@ function App() {
           <Route path="/register" element={<Register />} />
         </Routes>
       </BrowserRouter>
+      
     </div>
   );
 }

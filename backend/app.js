@@ -1,19 +1,18 @@
-const express = require("express")
-const mongoose = require('mongoose')
+const port = 4000;
+const express = require('express');
+const app = express();
+
+const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+const cors = require('cors');
+
+app.use(express.json());
+app.use(cors());
+// First Schema For Users 
 const User = require('./models/user.model')
-
-const mongouri = "mongodb://localhost:27017/lab1db"
-// app service 
-const app = express()
-
-app.use(express.json())
-app.use(express.urlencoded({extended: false}))
-
-
 app.get('/', (req, res) => {
     res.send('Hello World, from cs309');
-});
-
+}); 
 app.get('/users', async (req, res) => {
     try {
         const users = await User.find({});
@@ -80,17 +79,22 @@ app.post('/adduser',  async (req, res) => {
     
 });
 
-// Assignment => add new route here to edit user info ???
-
-
-
-mongoose.set("strictQuery", false)
 mongoose
-.connect('mongodb://127.0.0.1:27017/lab2db')
-.then(() => {
-    console.log('connected to MongoDB')
-    //listen on specific port 
-    app.listen(8000, () => console.log('app started on port 8000'))
-}).catch((error) => {
-    console.log('cant connect to mongodb'+error)
-})
+  .connect("mongodb+srv://ahmedez570:987654321@cluster0.bf6fb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("Connected to MongoDB successfully!");
+  })
+  .catch((error) => {
+    console.error("Error connecting to MongoDB:", error.message);
+  });
+
+app.listen(port, (error) => {
+  if (!error) {
+    console.log(`Successfully created ${port}`);
+  } else {
+    console.log(error);
+  }
+});

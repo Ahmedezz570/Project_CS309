@@ -1,0 +1,17 @@
+body{
+    background-color: #B9B9B9;
+}
+.container{
+    width: 90%;
+    margin: auto;
+}
+h2{
+    text-transform: capitalize;
+    font-size: 44px;
+    font-family: cursive;
+}
+p{
+    width: 60%;
+    margin: auto;
+    color: rgb(30, 12, 12);
+}

@@ -2,7 +2,7 @@ import React from 'react'
 import './CSS/Tranning.css';
 const Tranning = () => {
     return (
-      <div>Tranning</div>
+      <div>Products</div>
     )
   }
   

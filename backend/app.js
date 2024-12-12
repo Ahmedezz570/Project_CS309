@@ -9,7 +9,12 @@ const cors = require('cors');
 app.use(express.json());
 app.use(cors());
 // First Schema For Users 
-const User = require('./models/user.model')
+const User = require('./models/user.model');
+
+//this two lines make the app crashes do not konow why
+//const cartRoutes = require('./backend/routes/cartRoutes');
+//app.use('/cart', cartRoutes);
+
 app.get('/', (req, res) => {
     res.send('Hello World, from cs309');
 }); 

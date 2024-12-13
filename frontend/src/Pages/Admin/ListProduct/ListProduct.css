@@ -1,0 +1,136 @@
+.listproduct {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px; 
+    padding: 20px;
+    margin: 20px auto; 
+    border-radius: 6px;
+    background: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+}
+
+.listproduct h1 {
+    color: #333;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.format-main {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); 
+    gap: 10px;
+    width: 100%;
+    padding: 10px 0;
+    color: #454545;
+    font-size: 15px;
+    font-weight: 600;
+    border-bottom: 1px solid #e0e0e0; 
+}
+
+.listproduct-format {
+    align-items: center;
+    font-weight: 500;
+}
+
+.product-icon {
+    height: 80px;
+    width: auto; 
+    border-radius: 4px; 
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); 
+}
+
+.remove {
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    margin: auto;
+    transition: transform 0.3s ease;
+}
+
+.remove:hover {
+    transform: scale(1.2); 
+}
+
+.allproducts {
+    overflow-y: auto;
+    width: 100%;
+    max-height: 500px;
+    padding: 10px 0;
+}
+
+
+@media (max-width: 1024px) {
+    .format-main {
+        grid-template-columns: repeat(5, 1fr); 
+        font-size: 14px;
+    }
+
+    .listproduct h1 {
+        font-size: 20px;
+    }
+
+    .product-icon {
+        height: 70px;
+    }
+}
+
+@media (max-width: 768px) {
+    
+    .format-main {
+        grid-template-columns: repeat(4, 1fr);
+        font-size: 13px;
+    }
+
+    .remove {
+        width: 25px;
+        height: 25px;
+    }
+
+    .listproduct {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .format-main {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        font-size: 12px;
+    }
+
+    .product-icon {
+        height: 60px;
+    }
+
+    .listproduct {
+        padding: 10px 15px;
+    }
+
+    .listproduct h1 {
+        font-size: 18px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 375px) {
+    .format-main {
+        grid-template-columns: 1fr; 
+        font-size: 11px;
+    }
+
+    .product-icon {
+        height: 50px;
+    }
+
+    .listproduct h1 {
+        font-size: 16px;
+    }
+
+    .remove {
+        width: 20px;
+        height: 20px;
+    }
+}

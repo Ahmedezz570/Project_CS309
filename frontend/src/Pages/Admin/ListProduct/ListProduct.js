@@ -7,7 +7,7 @@ const ListProduct = () => {
 
   const fetchInfo = async () => {
     try {
-      const response = await fetch('http://localhost:9000/allproducts');
+      const response = await fetch('http://localhost:4000/allproducts');
       const data = await response.json();
       console.log('Fetched products:', data); 
       setAllProducts(data);
@@ -21,7 +21,7 @@ const ListProduct = () => {
   }, []);
 
   const removeProduct = async (id)=>{
-       await fetch ('http://localhost:9000/removeproduct' , {
+       await fetch ('http://localhost:4000/removeproduct' , {
         method: 'POST',
         headers: {
           Accept : 'application/json',

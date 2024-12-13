@@ -1,0 +1,106 @@
+.admin {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 800px;
+    padding: 30px 90px;
+    margin: auto auto;
+    border-radius: 6px;
+    background: whitesmoke;
+    justify-content: center;
+    display: flex;
+    gap: 30px;
+    border-right: 2px solid #e0e0e0;
+    border-left: 2px solid #e0e0e0; 
+}
+  
+  .admin-button {
+    background: linear-gradient(135deg, #6a11cb, #2575fc); 
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    width: 100%; 
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    transition: all 0.3s ease;
+    justify-content: center;
+  }
+  
+  .admin-button:hover {
+    background: linear-gradient(135deg, #2575fc, #6a11cb); 
+    transform: translateY(-3px); 
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); 
+  }
+  
+  .admin-button:active {
+    transform: translateY(1px); 
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+  }
+  
+  .admin-button span {
+    font-size: 14px;
+    font-weight: 300;
+  }
+  
+  .admin-button:hover span {
+    font-weight: 500;
+    letter-spacing: 1px; 
+  }
+
+ 
+@media (max-width: 1280px) {
+    .sidebar {
+        width: auto;
+        padding: 30px;
+        margin: 20px auto; 
+    }
+    .admin-button {
+      font-size: 14px; 
+      padding: 10px 15px;
+    }
+  }
+  
+  @media (max-width: 1024px) {
+    .admin {
+        width: auto;
+        padding: 30px;
+        margin: 20px auto; 
+    }
+  
+    .admin-button {
+      font-size: 12px; 
+      padding: 8px 10px;
+    }
+  }
+  @media (max-width: 800px) {
+    .admin {
+        width: auto;
+        padding: 30px;
+        margin: 20px auto; 
+        
+    }
+  
+    .admin-button {
+      font-size: 12px; 
+      padding: 8px 10px;
+    }
+  }
+  @media (max-width: 500px) {
+    .admin {
+        width: auto;
+        padding: 30px;
+        margin: 20px auto; 
+        flex-direction: column; 
+        align-items: stretch; 
+        gap: 15px; 
+        
+    }
+  
+    .admin-button {
+      font-size: 12px; 
+      padding: 8px 10px;
+    }
+  }

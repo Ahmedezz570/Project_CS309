@@ -12,7 +12,7 @@ const Shop = () => {
       <div className="container">
         <section className='logos'>
         <div className='logo'>
-        <i class="fa-regular fa-paper-plane"></i>
+        <i className="fa-regular fa-paper-plane"></i>
         <div>
         <h3>Free Worlwide Shipping</h3>
         <p> Lorem Ipsum Is Simply Dummy Text
@@ -20,7 +20,7 @@ const Shop = () => {
         </div>
         </div>
         <div className='logo'>
-        <i class="fa-regular fa-paper-plane"></i>
+        <i className="fa-regular fa-paper-plane"></i>
         <div>
         <h3>Free Worlwide Shipping</h3>
         <p> Lorem Ipsum Is Simply Dummy Text
@@ -28,7 +28,7 @@ const Shop = () => {
         </div>
         </div>
         <div className='logo'>
-        <i class="fa-regular fa-paper-plane"></i>
+        <i className="fa-regular fa-paper-plane"></i>
         <div>
         <h3>Free Worlwide Shipping</h3>
         <p> Lorem Ipsum Is Simply Dummy Text

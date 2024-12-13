@@ -7,7 +7,9 @@ import Tranning from './Pages/Tranning';
 import Cart from './Pages/Cart';
 import Login from './Pages/Login';
 import Register from './Pages/Register';
-
+import Admin from './Pages/Admin/Admin';
+import AddProduct from './Pages/Admin/AddProduct/AddProduct';
+import ListProduct from './Pages/Admin/ListProduct/ListProduct';
 function App() {
   return (
     <div className="App">
@@ -18,7 +20,10 @@ function App() {
           <Route path="/tranning" element={<Tranning />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Login />} />
-          // <Route path="/register" element={<Register />} />
+           <Route path="/register" element={<Register />} />
+           <Route path="/admin" element = {<Admin />}/>
+           <Route path='/addproduct' element={<AddProduct />}/>
+           <Route path='/productlist' element={<ListProduct />}/>
         </Routes> 
        </BrowserRouter>  
     </div>

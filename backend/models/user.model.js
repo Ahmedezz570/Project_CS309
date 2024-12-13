@@ -8,25 +8,8 @@ const userSchema = new Schema(
         password: { type: String, required: true },
         phoneNumber: { type: String, required: false },
         image: { type: String, required: false },
-        cart: [
-            {
-                product: {
-                    type: Schema.Types.ObjectId, 
-                    ref: 'Product', 
-                    required: true
-                },
-                quantity: {
-                    type: Number, 
-                    required: true, 
-                    min: 1,
-                    default: 1
-                },
-                price: {
-                    type: Number,
-                    required: true
-                }
-            }
-        ]
+        cart: { type: object, required: false },
+        isAdmin: { type: Boolean, required: false },
     },
     {
         timestamps: true

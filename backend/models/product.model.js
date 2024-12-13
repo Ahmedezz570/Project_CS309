@@ -5,10 +5,8 @@ const productSchema = new Schema(
     {
         name: { type: String, required: true },
         description: { type: String, required: false },
-        price: { type: Number, required: true },
-        stock: { type: String, required: true },
         imageUrl: { type: String, required: true },
-        category: { type: String, ref: 'Category' },
+        category: { type: String, required: true },
         new_price: { type: Number, required: false },
         old_price: { type: Number, required: false },
     },
@@ -17,4 +15,4 @@ const productSchema = new Schema(
     }
 
 );
-module.exports = mongoose.model('Product', productSchema);
+module.exports = mongoose.model('Product', productSchema);

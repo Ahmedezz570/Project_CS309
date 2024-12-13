@@ -8,12 +8,12 @@ const userSchema = new Schema(
         password: { type: String, required: true },
         phoneNumber: { type: String, required: false },
         image: { type: String, required: false },
-        cart: { type: object, required: false },
-        isAdmin: { type: Boolean = false, required: false },
+        cart: { type:[], required: false },
+        isAdmin: { type: Boolean, required: false,default: false },
     },
     {
         timestamps: true
     }
 
 );
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', userSchema);

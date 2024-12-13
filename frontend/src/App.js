@@ -11,17 +11,16 @@ import Register from './Pages/Register';
 function App() {
   return (
     <div className="App">
-      <Shop/>
-      {/* <BrowserRouter>
+       <BrowserRouter>
         <Routes>
-          {/* <Route path="/" element={<Shop />} />
+           <Route path="/" element={<Shop />} />
           <Route path="/special" element={<Special />} />
           <Route path="/tranning" element={<Tranning />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </Routes> */}
-      {/* </BrowserRouter> */} 
+          // <Route path="/register" element={<Register />} />
+        </Routes> 
+       </BrowserRouter>  
     </div>
   );
 }

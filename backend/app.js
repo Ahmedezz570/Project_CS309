@@ -94,6 +94,15 @@ app.post('/removeproduct', async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 });
+app.get('/products/:category', async (req, res) => {
+    try {
+         const category=req.params.category;
+        const products = await Product.find({ category: category})
+        res.status(200).json(products);
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+});
 
 app.get('/user/:id', async (req, res) => {
     

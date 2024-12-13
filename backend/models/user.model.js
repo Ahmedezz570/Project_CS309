@@ -9,7 +9,7 @@ const userSchema = new Schema(
         phoneNumber: { type: String, required: false },
         image: { type: String, required: false },
         cart: { type: object, required: false },
-        isAdmin: { type: Boolean, required: false },
+        isAdmin: { type: Boolean = false, required: false },
     },
     {
         timestamps: true

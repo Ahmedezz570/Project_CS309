@@ -5,12 +5,13 @@ const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
-
+// multer Library .
+const multer = require('multer');
 app.use(express.json());
 app.use(cors());
 // First Schema For Users 
 const User = require('./models/user.model');
-
+const Product = require('./models/product.model');
 app.get('/', (req, res) => {
     res.send('Hello World, from strikers!!');
 }); 
@@ -21,6 +22,67 @@ app.get('/users', async (req, res) => {
     } catch (error) {
         res.status(500).json({message: error.message})
     }
+});
+
+const storage = multer.diskStorage({
+  destination: './upload/images',
+  filename: (req, file, cb) => {
+    return cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`);
+  }
+});  
+const upload = multer({storage: storage});
+app.use('/images' , express.static('upload/images'));
+
+
+app.post("/upload" , upload.single('product') , (req , res)=>{
+  res.json({
+      success: 1,
+      image_url:`http://localhost:${PORT}/images/${req.file.filename}`,
+  });
+});
+app.post('/addproduct', async (req, res) => {
+  try {
+      let products = await Product.find({});
+      let id = products.length > 0 ? products.slice(-1)[0].id + 1 : 1;
+
+      const product = new Product({
+          id: id,
+          name: req.body.name,
+          image: req.body.image,
+          category: req.body.category,
+          new_price: req.body.new_price,
+          old_price: req.body.old_price,
+      });
+
+      await product.save();
+      res.json({
+          success: true,
+          message: "Product added successfully",
+      });
+  } catch (error) {
+      console.error(error);
+      res.status(400).json({
+          success: false,
+          message: "Product validation failed",
+          error: error.message,
+      });
+  }
+});
+app.get('/allproducts', async (req, res) => {
+  try {
+    const products = await Product.find({});
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+app.post('/removeproduct', async (req, res) => {
+  try {
+    await Product.findOneAndDelete({ id: req.body.id });
+    res.json({ success: true, message: "Product removed successfully" });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
 });
 
 app.get('/user/:id', async (req, res) => {

@@ -14,11 +14,7 @@ const Admin = () => {
           <button className="admin-button">List Products</button>
         </div>
       </Link>
-      <Link to={'/removeproduct'} style={{ textDecoration: 'none' }}>
-        <div className="admin-item">
-          <button className="admin-button">Update Product</button>
-        </div>
-      </Link>
+     
     </div>
   );
 }

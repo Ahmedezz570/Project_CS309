@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './ListProduct.css';
 import Remove from '../Assets/cross_icon.png';
 
 const ListProduct = () => {
   const [allProducts, setAllProducts] = useState([]);
+  const navigate = useNavigate();
 
   const fetchInfo = async () => {
     try {
       const response = await fetch('http://localhost:4000/allproducts');
       const data = await response.json();
-      console.log('Fetched products:', data); 
       setAllProducts(data);
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -20,17 +21,25 @@ const ListProduct = () => {
     fetchInfo();
   }, []);
 
-  const removeProduct = async (id)=>{
-       await fetch ('http://localhost:4000/removeproduct' , {
+  const removeProduct = async (id) => {
+    try {
+      await fetch('http://localhost:4000/removeproduct', {
         method: 'POST',
         headers: {
-          Accept : 'application/json',
+          Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({id: id}),
-       });
-     await  fetchInfo(); 
-  }
+        body: JSON.stringify({ id }),
+      });
+      await fetchInfo();
+    } catch (error) {
+      console.error('Error removing product:', error);
+    }
+  };
+
+  const navigateToUpdate = (product) => {
+    navigate('/updateproduct', { state: product });
+  };
 
   return (
     <div className='listproduct'>
@@ -41,7 +50,7 @@ const ListProduct = () => {
         <p>Old Price</p>
         <p>New Price</p>
         <p>Category</p>
-        <p>Remove</p>
+        <p>Actions</p>
       </div>
 
       <div className='allproducts'>
@@ -54,9 +63,21 @@ const ListProduct = () => {
               <p>${product.old_price}</p>
               <p>${product.new_price}</p>
               <p>{product.category}</p>
-              <img onClick={()=>{removeProduct(product.id)}} className='remove' src={Remove} alt='Remove' />
+              <div>
+                <img
+                  onClick={() => removeProduct(product.id)}
+                  className='remove'
+                  src={Remove}
+                  alt='Remove'
+                />
+                <button
+                  onClick={() => navigateToUpdate(product)}
+                  className='update'
+                >
+                  Update
+                </button>
+              </div>
             </div>
-           
           ))
         ) : (
           <p>No products available.</p>

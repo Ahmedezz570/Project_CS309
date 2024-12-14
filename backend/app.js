@@ -103,7 +103,37 @@ app.get('/products/:category', async (req, res) => {
         res.status(500).json({message: error.message})
     }
 });
-
+app.put('/updateproduct', async (req, res) => {
+    try {
+      const { id, name, image, category, new_price, old_price } = req.body;
+  
+      const updatedProduct = await Product.findOneAndUpdate(
+        { id: id },
+        { name, image, category, new_price, old_price },
+        { new: true, runValidators: true }
+      );
+  
+      if (updatedProduct) {
+        res.json({
+          success: true,
+          message: "Product updated successfully",
+          product: updatedProduct
+        });
+      } else {
+        res.status(404).json({
+          success: false,
+          message: "Product not found",
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({
+        success: false,
+        message: "Error updating product",
+        error: error.message,
+      });
+    }
+  });
 app.get('/user/:id', async (req, res) => {
     
     try {

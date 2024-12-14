@@ -10,6 +10,7 @@ import Register from './Pages/Register';
 import Admin from './Pages/Admin/Admin';
 import AddProduct from './Pages/Admin/AddProduct/AddProduct';
 import ListProduct from './Pages/Admin/ListProduct/ListProduct';
+import UpdateProduct from './Pages/Admin/UpdateProduct/UpdateProduct';
 function App() {
   return (
     <div className="App">
@@ -24,6 +25,7 @@ function App() {
            <Route path="/admin" element = {<Admin />}/>
            <Route path='/addproduct' element={<AddProduct />}/>
            <Route path='/productlist' element={<ListProduct />}/>
+           <Route path='/updateproduct' element={<UpdateProduct/>}/>
         </Routes> 
        </BrowserRouter>  
     </div>

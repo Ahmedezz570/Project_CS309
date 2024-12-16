@@ -134,19 +134,7 @@ app.put('/updateproduct', async (req, res) => {
       });
     }
   });
-app.get('/user/:id', async (req, res) => {
-    
-    try {
-        // req id 
-        const id = req.params.id;
-        // find by id in users 
-        const user = await User.findById(id);
-        res.status(200).json(user);
-    } catch (error) {
-        res.status(500).json({message: error.message})
-    }
-});
-app.get('/user/:email', async (req, res) => {
+  app.get('/user/:email', async (req, res) => {
   try {
       const email = req.params.email;
       const user = await User.findOne({ email: email });

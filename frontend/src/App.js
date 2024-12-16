@@ -11,6 +11,8 @@ import Admin from './Pages/Admin/Admin';
 import AddProduct from './Pages/Admin/AddProduct/AddProduct';
 import ListProduct from './Pages/Admin/ListProduct/ListProduct';
 import UpdateProduct from './Pages/Admin/UpdateProduct/UpdateProduct';
+import Profile from './Pages/profile';
+
 function App() {
   return (
     <div className="App">
@@ -26,6 +28,9 @@ function App() {
            <Route path='/addproduct' element={<AddProduct />}/>
            <Route path='/productlist' element={<ListProduct />}/>
            <Route path='/updateproduct' element={<UpdateProduct/>}/>
+           <Route path="/profile" element={<Profile/>} />
+
+  
         </Routes> 
        </BrowserRouter>  
     </div>

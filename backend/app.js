@@ -134,6 +134,159 @@ app.put('/updateproduct', async (req, res) => {
       });
     }
   });
+  app.get('/cart', async (req, res) => {
+    try {
+        const token = req.headers.authorization?.split(' ')[1];
+        if (!token) {
+            return res.status(401).json({ message: 'No token provided' });
+        }
+
+        const secretKey = 'your_secret_key';
+        let decoded;
+        try {
+            decoded = jwt.verify(token, secretKey);
+        } catch (error) {
+            return res.status(401).json({ message: 'Invalid or expired token' });
+        }
+
+        const { email } = decoded;
+        if (!email) {
+            return res.status(400).json({ message: 'Invalid token payload' });
+        }
+
+        const user = await User.findOne({ email: email });
+        if (!user) {
+            return res.status(404).json({ message: `User with email "${email}" not found` });
+        }
+
+        if (!user.cart || user.cart.length === 0) {
+            return res.status(404).json({ message: 'Cart is empty' });
+        }
+
+        res.status(200).json({
+            message: 'Cart retrieved successfully',
+            cart: user.cart
+        });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error: ' + error.message });
+    }
+});
+
+app.post('/add/cart', async (req, res) => {
+  try {
+      const { productId } = req.body;
+
+      if (!productId) {
+          return res.status(400).json({ success: false, message: "Product ID is required" });
+      }
+
+      const token = req.headers.authorization?.split(' ')[1];
+      if (!token) {
+          return res.status(401).json({ success: false, message: 'No token provided' });
+      }
+
+      const secretKey = 'your_secret_key';
+      let decoded;
+      try {
+          decoded = jwt.verify(token, secretKey);
+      } catch (error) {
+          return res.status(401).json({ success: false, message: 'Invalid or expired token' });
+      }
+
+      const { email } = decoded;
+      if (!email) {
+          return res.status(400).json({ success: false, message: 'Invalid token payload' });
+      }
+
+      const user = await User.findOne({ email: email });
+      if (!user) {
+          return res.status(404).json({ success: false, message: `User with email "${email}" not found` });
+      }
+
+      const product = await Product.findById(productId);
+      if (!product) {
+          return res.status(404).json({ success: false, message: `Product with ID "${productId}" not found` });
+      }
+
+      if (!user.cart) {
+          user.cart = {};
+      }
+
+      const nextKey = Object.keys(user.cart).length === 0
+      ? 0
+      : Math.max(...Object.keys(user.cart).map(Number)) + 1;
+
+
+      user.cart[nextKey] = {
+          productId: product._id,
+          name: product.name,
+          image: product.image,
+          category: product.category,
+          new_price: product.new_price,
+          old_price: product.old_price
+      };
+
+      await user.save();
+
+      res.status(200).json({
+          success: true,
+          message: 'Product added to cart successfully',
+          cart: user.cart
+      });
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({
+          success: false,
+          message: 'Server error: ' + error.message,
+      });
+  }
+});
+
+app.delete('/remove/cart', async (req, res) => {
+  try {
+      const token = req.headers.authorization?.split(' ')[1];
+      if (!token) {
+          return res.status(401).json({ success: false, message: 'No token provided' });
+      }
+
+      const secretKey = 'your_secret_key';
+      let decoded;
+      try {
+          decoded = jwt.verify(token, secretKey);
+      } catch (error) {
+          return res.status(401).json({ success: false, message: 'Invalid or expired token' });
+      }
+
+      const { email } = decoded;
+      const { productId } = req.body;
+
+      if (!productId) {
+          return res.status(400).json({ success: false, message: 'Product ID is required' });
+      }
+
+      const user = await User.findOne({ email });
+      if (!user) {
+          return res.status(404).json({ success: false, message: 'User not found' });
+      }
+
+      if (!user.cart || !user.cart[productId]) {
+          return res.status(404).json({ success: false, message: 'Product not found in the cart' });
+      }
+
+      delete user.cart[productId];
+      await user.save();
+
+      res.status(200).json({
+          success: true,
+          message: 'Product removed from cart successfully',
+          cart: user.cart
+      });
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: 'Server error: ' + error.message });
+  }
+});
+
   app.get('/user/:email', async (req, res) => {
   try {
       const email = req.params.email;
@@ -223,7 +376,6 @@ app.post('/login', async (req, res) => {
         if (!validPassword) {
             return res.status(400).send('Invalid Password');
         }
-
         const token = jwt.sign(
             { id: user._id, email: user.email }, 
             'your_secret_key', 

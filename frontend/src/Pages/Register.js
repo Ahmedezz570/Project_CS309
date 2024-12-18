@@ -1,32 +1,34 @@
 import React, { useState } from "react";
 import "./CSS/Register.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
-  const [fullname, setFullname] = useState("");
-  const [username, setUsername] = useState("");
+  const [fullName, setFullname] = useState("");
+  const [email, setEmail] = useState(""); 
   const [password, setPassword] = useState("");
+  
+  const navigate = useNavigate(); 
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (fullname.trim() === "" || username.trim() === "" || password.length < 6) {
+  
+    if (fullName.trim() === "" || email.trim() === "" || password.length < 6) {
       alert("Please fill in all fields. Password must be at least 6 characters.");
       return;
     }
-
-    fetch("https://example.com/api/register", {
+    fetch("http://localhost:4000/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ fullname, username, password }),
+      body: JSON.stringify({ fullName, email, password }), 
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         if (data.success) {
           alert("Registration successful! You can now log in.");
-          window.location.href = "/login";
+          navigate("/login");  // توجيه المستخدم إلى صفحة تسجيل الدخول بعد التسجيل
         } else {
           alert("Registration failed: " + data.message);
         }
@@ -49,7 +51,7 @@ const Register = () => {
             type="text"
             id="fullname"
             name="fullname"
-            value={fullname}
+            value={fullName}
             onChange={(e) => setFullname(e.target.value)}
             required
             className="form-input"
@@ -57,15 +59,15 @@ const Register = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="username" className="form-label">
-            Username:
+          <label htmlFor="email" className="form-label"> 
+            Email:
           </label>
           <input
-            type="text"
-            id="username"
-            name="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            type="email"
+            id="email"
+            name="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
             className="form-input"
             autoComplete="off"

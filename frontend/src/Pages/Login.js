@@ -3,30 +3,32 @@ import './CSS/Login.css';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (username.trim() === "" || password.trim() === "") {
+    if (email.trim() === "" || password.trim() === "") {
       alert("Please fill in both fields.");
       return;
     }
 
-    fetch("https://example.com/api/login", {
+    fetch("http://localhost:4000/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ email, password }),
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         if (data.success) {
-          alert("Login successful!");
-          navigate("/dashboard"); // Redirect to a dashboard or home page
+          localStorage.setItem("token", data.token); 
+          localStorage.setItem("email", email);
+          navigate("/profile"); 
         } else {
           alert("Invalid credentials. Please try again.");
         }
@@ -42,14 +44,14 @@ const Login = () => {
       <h1 className="login-title">Login</h1>
       <form className="login-form" onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="username" className="form-label">Username:</label>
+          <label htmlFor="email" className="form-label">Email:</label>
           <input
-            type="text"
-            id="username"
-            name="username"
+            type="email"  
+            id="email"
+            name="email"
             className="form-input"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
         </div>
@@ -74,5 +76,4 @@ const Login = () => {
     </div>
   );
 };
-
 export default Login;

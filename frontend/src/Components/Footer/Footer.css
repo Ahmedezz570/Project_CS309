@@ -1,0 +1,51 @@
+footer {
+    background-color: black;
+    color: white;
+}
+
+.fir_half {
+    margin: 28px 0;
+    padding: 25px 0
+}
+
+footer form button {
+    margin: 0;
+
+}
+
+.flex{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.any::after {
+    content: "";
+    background-color: white;
+    height: 3px;
+    width: 55%;
+    display: block;
+    margin: 47px auto;
+}
+.sec-half{
+    display: flex;
+}
+footer li{
+    list-style: none;
+    margin-top: 12px;
+    opacity: 0.6;
+}
+footer h4{
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+footer img{
+    width: 30%;
+    border-top-left-radius: 89px;
+    border-top-right-radius: 86px;
+    opacity: 0.8;
+}
+form p{
+  margin-bottom: 22px;
+  font-size: 21px;
+}

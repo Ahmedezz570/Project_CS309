@@ -1,5 +1,5 @@
 body{
-    background-color: #B9B9B9;
+    background-color: #cdcccc !important;
 }
 .container{
     width: 90%;
@@ -127,4 +127,70 @@ h2{
     background-color: #00000078;
     height: 4px;
     margin: 29% 37% -17%;
+}
+.special_pro{
+    margin-top: 8%;
+}
+.contain{
+   display: flex;
+   position: relative;
+   align-items: center;
+}
+.spec-text h3{
+    text-transform:uppercase;
+    font-size: xx-large;
+    margin-bottom: 17%;
+} 
+.spec-text{
+    width: 281%;
+}
+.abs-p{
+    position: absolute;
+    font-size: 95px;
+    top: 9px;
+    left: 37px;
+    color: gray;
+    opacity: 0.3;
+    text-transform: uppercase;
+}
+.sm-card{
+width: 30%;
+}
+.sm-card img{
+    width: 69%;
+}
+.pricee{
+    display: inline-block;
+    margin-right: 11px;
+    margin-top: 10px;
+    color: #cf0000;
+    font-size: 21px;
+    font-family: fantasy;
+}
+del{
+    font-size: 13px;
+    color: #706363;
+}
+.sm-card .name{
+    margin: 3px 1px;
+    text-transform: capitalize;
+    font-size: 21px;
+    font-family: cursive;
+    font-weight: 800;
+}
+.products{
+    display: flex   ;
+        justify-content: end;
+}
+.final{
+    margin-top: 10%;
+    display: flex
+;
+    justify-content: space-around;
+    /* background: white; */
+    padding: 23px 45px;
+    border-radius: 13px;
+}
+.final img:hover{
+opacity: 0.6;
 }

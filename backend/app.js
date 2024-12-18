@@ -344,29 +344,37 @@ app.delete('/user/:id', async (req, res) => {
 app.post('/register', async (req, res) => {
     try {
         let userParam = req.body;
+        console.log(req.body);
 
         if (await User.findOne({ email: userParam.email })) {
-            return res.status(400).send('Email "' + userParam.email + '" already exists');
+            return res.status(400).json({ message: 'Email "' + userParam.email + '" already exists' });
         }
 
-        const saltRounds = 10; 
+        const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(userParam.password, saltRounds);
 
         const user = new User({
-            ...userParam, 
-            password: hashedPassword, 
+            ...userParam,
+            password: hashedPassword,
         });
 
         await user.save();
-        res.status(201).send("User added successfully!");
+        res.status(200).json({
+            success: true,
+            message: 'Registration successful',
+        });
     } catch (err) {
-        res.status(500).send('Server error: ' + err.message);
+        console.error(err);
+        res.status(500).json({ message: 'Server error: ' + err.message });
     }
 });
+
 
 app.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
+        console.log("Received email:", email);  // تأكد من استلام البريد
+        console.log("Received password:", password);
 
         const user = await User.findOne({ email: email });
         if (!user) {
@@ -384,6 +392,7 @@ app.post('/login', async (req, res) => {
 
         res.status(200).json({
             message: 'Login successful',
+            success: true,
             token: token
         });
 

@@ -173,119 +173,136 @@ app.put('/updateproduct', async (req, res) => {
 });
 
 app.post('/add/cart', async (req, res) => {
-  try {
-      const { productId } = req.body;
+    try {
+        const { productId } = req.body;
+  
+        if (!productId) {
+            return res.status(400).json({ success: false, message: "Product ID is required" });
+        }
+  
+        const token = req.headers.authorization?.split(' ')[1];
+        if (!token) {
+            return res.status(401).json({ success: false, message: 'No token provided' });
+        }
+  
+        const secretKey = 'your_secret_key';
+        let decoded;
+        try {
+            decoded = jwt.verify(token, secretKey);
+        } catch (error) {
+            return res.status(401).json({ success: false, message: 'Invalid or expired token' });
+        }
+  
+        const { email } = decoded;
+        if (!email) {
+            return res.status(400).json({ success: false, message: 'Invalid token payload' });
+        }
+  
+        const user = await User.findOne({ email: email });
+        if (!user) {
+            return res.status(404).json({ success: false, message: `User with email "${email}" not found` });
+        }
+  
+        const product = await Product.findById(productId);
+        if (!product) {
+            return res.status(404).json({ success: false, message: `Product with ID "${productId}" not found` });
+        }
+  
+        if (!user.cart) {
+            user.cart = {};
+        }
+  
+        const nextKey = Object.keys(user.cart).length === 0
+        ? 0
+        : Math.max(...Object.keys(user.cart).map(Number)) + 1;
+  
+  
+        user.cart[nextKey] = {
+            productId: product._id,
+            name: product.name,
+            image: product.image,
+            category: product.category,
+            new_price: product.new_price,
+            old_price: product.old_price,
+            quantity: 1
+        };
+  
+        await user.save();
+  
+        res.status(200).json({
+            success: true,
+            message: 'Product added to cart successfully',
+            cart: user.cart
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: 'Server error: ' + error.message,
+        });
+    }
+  });
 
-      if (!productId) {
-          return res.status(400).json({ success: false, message: "Product ID is required" });
-      }
-
-      const token = req.headers.authorization?.split(' ')[1];
-      if (!token) {
-          return res.status(401).json({ success: false, message: 'No token provided' });
-      }
-
-      const secretKey = 'your_secret_key';
-      let decoded;
-      try {
-          decoded = jwt.verify(token, secretKey);
-      } catch (error) {
-          return res.status(401).json({ success: false, message: 'Invalid or expired token' });
-      }
-
-      const { email } = decoded;
-      if (!email) {
-          return res.status(400).json({ success: false, message: 'Invalid token payload' });
-      }
-
-      const user = await User.findOne({ email: email });
-      if (!user) {
-          return res.status(404).json({ success: false, message: `User with email "${email}" not found` });
-      }
-
-      const product = await Product.findById(productId);
-      if (!product) {
-          return res.status(404).json({ success: false, message: `Product with ID "${productId}" not found` });
-      }
-
-      if (!user.cart) {
-          user.cart = {};
-      }
-
-      const nextKey = Object.keys(user.cart).length === 0
-      ? 0
-      : Math.max(...Object.keys(user.cart).map(Number)) + 1;
-
-
-      user.cart[nextKey] = {
-          productId: product._id,
-          name: product.name,
-          image: product.image,
-          category: product.category,
-          new_price: product.new_price,
-          old_price: product.old_price
-      };
-
-      await user.save();
-
-      res.status(200).json({
-          success: true,
-          message: 'Product added to cart successfully',
-          cart: user.cart
-      });
-  } catch (error) {
-      console.error(error);
-      res.status(500).json({
-          success: false,
-          message: 'Server error: ' + error.message,
-      });
-  }
-});
-
-app.delete('/remove/cart', async (req, res) => {
-  try {
-      const token = req.headers.authorization?.split(' ')[1];
-      if (!token) {
-          return res.status(401).json({ success: false, message: 'No token provided' });
-      }
-
-      const secretKey = 'your_secret_key';
-      let decoded;
-      try {
-          decoded = jwt.verify(token, secretKey);
-      } catch (error) {
-          return res.status(401).json({ success: false, message: 'Invalid or expired token' });
-      }
-
-      const { email } = decoded;
-      const { productId } = req.body;
-
-      if (!productId) {
-          return res.status(400).json({ success: false, message: 'Product ID is required' });
-      }
-
-      const user = await User.findOne({ email });
-      if (!user) {
-          return res.status(404).json({ success: false, message: 'User not found' });
-      }
-
-      if (!user.cart || !user.cart[productId]) {
-          return res.status(404).json({ success: false, message: 'Product not found in the cart' });
-      }
-
-      delete user.cart[productId];
-      await user.save();
-
-      res.status(200).json({
-          success: true,
-          message: 'Product removed from cart successfully',
-          cart: user.cart
-      });
-  } catch (error) {
-      console.error(error);
-      res.status(500).json({ success: false, message: 'Server error: ' + error.message });
-  }
-});
+  app.delete('/delete/cart', async (req, res) => {
+    try {
+        const { productId } = req.body;
+  
+        if (!productId) {
+            return res.status(400).json({ success: false, message: "Product ID is required" });
+        }
+  
+        const token = req.headers.authorization?.split(' ')[1];
+        if (!token) {
+            return res.status(401).json({ success: false, message: 'No token provided' });
+        }
+  
+        const secretKey = 'your_secret_key';
+        let decoded;
+        try {
+            decoded = jwt.verify(token, secretKey);
+        } catch (error) {
+            return res.status(401).json({ success: false, message: 'Invalid or expired token' });
+        }
+  
+        const { email } = decoded;
+        if (!email) {
+            return res.status(400).json({ success: false, message: 'Invalid token payload' });
+        }
+  
+        const user = await User.findOne({ email: email });
+        if (!user) {
+            return res.status(404).json({ success: false, message: `User with email "${email}" not found` });
+        }
+  
+        // Check if the product exists in the user's cart
+        const cartItem = Object.values(user.cart).find(item => item.productId.toString() === productId);
+        if (!cartItem) {
+            return res.status(404).json({ success: false, message: `Product with ID "${productId}" not found in cart` });
+        }
+  
+        // Remove the product from the cart
+        const updatedCart = Object.fromEntries(
+            Object.entries(user.cart).filter(([key, item]) => item.productId.toString() !== productId)
+        );
+  
+        user.cart = updatedCart;
+  
+        // Save the updated cart
+        await user.save();
+  
+        res.status(200).json({
+            success: true,
+            message: 'Product removed from cart successfully',
+            cart: user.cart
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: 'Server error: ' + error.message,
+        });
+    }
+  });
 
   app.get('/user/:email', async (req, res) => {
   try {

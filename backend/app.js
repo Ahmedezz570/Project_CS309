@@ -2,6 +2,7 @@ const port = 4000;
 const express = require('express');
 const app = express();
 const bcrypt = require('bcrypt');
+const validator = require('validator'); 
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
@@ -363,7 +364,21 @@ app.delete('/user/:id', async (req, res) => {
 app.post('/register', async (req, res) => {
     try {
         let userParam = req.body;
+        const { email, password } = userParam;
         console.log(req.body);
+
+        if (!validator.isEmail(email)) {
+            return res.status(400).json({ message: 'Invalid email format' });
+        }
+
+        const validationResult = validatePassword(password);
+        if (!validationResult.isValid) {
+            return res.status(400).json({
+                success: false,
+                message: 'Password validation failed',
+                errors: validationResult.errors
+            });
+        }
 
         if (await User.findOne({ email: userParam.email })) {
             return res.status(400).json({ message: 'Email "' + userParam.email + '" already exists' });
@@ -387,6 +402,60 @@ app.post('/register', async (req, res) => {
         res.status(500).json({ message: 'Server error: ' + err.message });
     }
 });
+
+const validatePassword = (password) => {
+    const validationRules = {
+        minLength: 8,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1,
+        maxLength: 50
+    };
+
+    const errors = [];
+    
+    if (password.length < validationRules.minLength) {
+        errors.push(`Password must be at least ${validationRules.minLength} characters long`);
+    }
+
+    if (password.length > validationRules.maxLength) {
+        errors.push(`Password cannot exceed ${validationRules.maxLength} characters`);
+    }
+
+    if ((password.match(/[a-z]/g) || []).length < validationRules.minLowercase) {
+        errors.push('Password must contain at least one lowercase letter');
+    }
+
+    if ((password.match(/[A-Z]/g) || []).length < validationRules.minUppercase) {
+        errors.push('Password must contain at least one uppercase letter');
+    }
+
+    if ((password.match(/[0-9]/g) || []).length < validationRules.minNumbers) {
+        errors.push('Password must contain at least one number');
+    }
+
+    if ((password.match(/[!@#$%^&*(),.?":{}|<>]/g) || []).length < validationRules.minSymbols) {
+        errors.push('Password must contain at least one special character');
+    }
+
+    if (/(.)\1{2,}/.test(password)) {
+        errors.push('Password cannot contain repeating characters (e.g., "aaa")');
+    }
+
+    if (/^[0-9]*$/.test(password)) {
+        errors.push('Password cannot contain only numbers');
+    }
+
+    if (/^[a-zA-Z]*$/.test(password)) {
+        errors.push('Password cannot contain only letters');
+    }
+
+    return {
+        isValid: errors.length === 0,
+        errors
+    };
+};
 
 
 app.post('/login', async (req, res) => {

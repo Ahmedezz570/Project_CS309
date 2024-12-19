@@ -44,18 +44,20 @@ app.post("/upload" , upload.single('product') , (req , res)=>{
 });
 app.post('/addproduct', async (req, res) => {
   try {
-      const { name, image, category, new_price, old_price } = req.body;
+      const { id , name, image, category, description,new_price, old_price } = req.body;
 
       
-      if (!name || !image || !category || !new_price || !old_price) {
+      if (!name || !image || !category || !description || !new_price || !old_price) {
           return res.status(400).json({ success: false, message: "All fields are required" });
       }
 
       
       const product = new Product({
+        id ,
           name,
           image,
           category,
+          description ,
           new_price: Number(new_price),
           old_price: Number(old_price),
       });

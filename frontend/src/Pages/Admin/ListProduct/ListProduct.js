@@ -47,9 +47,6 @@ const ListProduct = () => {
       <div className='format-main'>
         <p>Products</p>
         <p>Title</p>
-        <p>Old Price</p>
-        <p>New Price</p>
-        <p>Category</p>
         <p>Actions</p>
       </div>
 
@@ -60,9 +57,6 @@ const ListProduct = () => {
             <div key={index} className='format-main listproduct-format'>
               <img src={product.image} alt='' className='product-icon' />
               <p>{product.name}</p>
-              <p>${product.old_price}</p>
-              <p>${product.new_price}</p>
-              <p>{product.category}</p>
               <div>
                 <img
                   onClick={() => removeProduct(product.id)}

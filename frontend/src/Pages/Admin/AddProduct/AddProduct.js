@@ -8,6 +8,7 @@ const AddProduct = () => {
         name: '',
         image: '',
         category: '',
+        description : '',
         new_price: '',
         old_price: ''
     });
@@ -71,6 +72,16 @@ const AddProduct = () => {
                     name="name"
                 />
             </div>
+            <div className="field">
+                <p>Product Description</p>
+                <input
+                    value={productDetails.description}
+                    onChange={changeHandler}
+                    type="text"
+                    placeholder="Enter here"
+                    name="description"
+                />
+            </div>
 
             <div className="price">
                 <div className="field">
@@ -109,6 +120,7 @@ const AddProduct = () => {
                     <option value="national">National </option>
                 </select>
             </div>
+            
 
             <div className="field">
                 <label htmlFor="file-input">

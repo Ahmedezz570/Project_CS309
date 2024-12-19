@@ -12,11 +12,15 @@ import AddProduct from './Pages/Admin/AddProduct/AddProduct';
 import ListProduct from './Pages/Admin/ListProduct/ListProduct';
 import UpdateProduct from './Pages/Admin/UpdateProduct/UpdateProduct';
 import Profile from './Pages/profile';
+import AllProduct from './Pages/AllProduct';
 
 function App() {
   return (
+
     <div className="App">
+      {/* <Navbar /> */}
        <BrowserRouter>
+       
         <Routes>
            <Route path="/" element={<Shop />} />
           <Route path="/special" element={<Special />} />
@@ -29,8 +33,7 @@ function App() {
            <Route path='/productlist' element={<ListProduct />}/>
            <Route path='/updateproduct' element={<UpdateProduct/>}/>
            <Route path="/profile" element={<Profile/>} />
-
-  
+           <Route path='/allproduct' element ={<AllProduct/>}/>
         </Routes> 
        </BrowserRouter>  
     </div>

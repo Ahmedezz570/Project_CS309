@@ -11,6 +11,7 @@ const UpdateProduct = () => {
   const [name, setName] = useState(product.name || '');
   const [image, setImage] = useState(null);
   const [category, setCategory] = useState(product.category || '');
+  const [description, setDescription] = useState(product.description || '');
   const [newPrice, setNewPrice] = useState(product.new_price || '');
   const [oldPrice, setOldPrice] = useState(product.old_price || '');
 
@@ -28,6 +29,7 @@ const UpdateProduct = () => {
   const changeHandler = (e) => {
     if (e.target.name === 'name') setName(e.target.value);
     else if (e.target.name === 'category') setCategory(e.target.value);
+    else if (e.target.name === 'description') setDescription(e.target.value);
     else if (e.target.name === 'old_price') setOldPrice(e.target.value);
     else if (e.target.name === 'new_price') setNewPrice(e.target.value);
   };
@@ -61,6 +63,7 @@ const UpdateProduct = () => {
         id: product.id,
         name,
         category,
+        description,
         old_price: oldPrice,
         new_price: newPrice,
         image: imageResponse ? imageResponse.image_url : product.image, 
@@ -99,6 +102,16 @@ const UpdateProduct = () => {
             value={name}
             onChange={changeHandler}
             name="name"
+          />
+        </div>
+        <div className="field">
+          <p>Product Description</p>
+          <input
+            type="text"
+            placeholder="Enter here"
+            value={description}
+            onChange={changeHandler}
+            name="description"
           />
         </div>
 

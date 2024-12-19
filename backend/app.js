@@ -472,7 +472,8 @@ app.post('/login', async (req, res) => {
         res.status(200).json({
             message: 'Login successful',
             success: true,
-            token: token
+            token: token , 
+            isAdmin: user.isAdmin
         });
 
     } catch (error) {

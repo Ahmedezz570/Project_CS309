@@ -27,11 +27,16 @@ const Login = () => {
         console.log(data);
         if (data.success) {
           localStorage.setItem("token", data.token); 
-          localStorage.setItem("email", email);
-          navigate("/profile"); 
-        } else {
-          alert("Invalid credentials. Please try again.");
-        }
+          localStorage.setItem("email", email); 
+          const isAdmin = data.isAdmin;
+          if (isAdmin) {
+            navigate("/admin"); 
+          }
+         else {
+  
+          navigate("/profile"); }
+        } 
+        
       })
       .catch((error) => {
         console.error("Error:", error);

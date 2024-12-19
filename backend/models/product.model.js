@@ -10,6 +10,15 @@ const productSchema = new Schema(
         description: { type: String, required: true },
         new_price: { type: Number, required: true },
         old_price: { type: Number, required: true },
+        reviews:[
+                    {
+                        FullName: { type: String, required: true},
+                        email: { type: String, required: true},
+                        comment: { type: String, required: true},
+                        rating: { type: Number, required: true},
+                        createdAt: { type: Date, default: Date.now }
+                    }
+                ]
     },
     {
         timestamps: true

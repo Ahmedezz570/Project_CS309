@@ -8,13 +8,13 @@ const Footer = () => {
       <div className='any'>
         <div className="fir_half flex">
           <h2> Striker</h2>
-          <form action="" style={{ marginTop: '22px' }}>
+          {/* <form action="" style={{ marginTop: '22px' }}>
             <p> Sign up for more info</p>
             <input type="text" name='userEmail' placeholder='Enter your name' />
             <input type="email" name='userEmail' placeholder='Enter your email' />
 
             <button>Submit</button>
-          </form>
+          </form> */}
         </div>
       </div>
       <div className="sec-half container flex">

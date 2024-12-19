@@ -11,7 +11,7 @@ const multer = require('multer');
 const path = require("path");
 
 app.use(express.json());
-app.use(cors());
+app.use(cors()); 
 // First Schema For Users 
 const User = require('./models/user.model');
 const Product = require('./models/product.model');
@@ -44,42 +44,34 @@ app.post("/upload" , upload.single('product') , (req , res)=>{
   });
 });
 app.post('/addproduct', async (req, res) => {
-  try {
-      const { id , name, image, category, description,new_price, old_price } = req.body;
-
-      
-      if (!name || !image || !category || !description || !new_price || !old_price) {
-          return res.status(400).json({ success: false, message: "All fields are required" });
-      }
-
-      
+    try {
+      let products = await Product.find({});
+      let id = products.length > 0 ? products.slice(-1)[0].id + 1 : 1;
+  
       const product = new Product({
-        id ,
-          name,
-          image,
-          category,
-          description ,
-          new_price: Number(new_price),
-          old_price: Number(old_price),
+        id: id,
+        name: req.body.name,
+        image: req.body.image,
+        category: req.body.category,
+        description: req.body.description,
+        new_price: req.body.new_price,
+        old_price: req.body.old_price,
       });
-
-      
+  
       await product.save();
-
       res.json({
-          success: true,
-          message: "Product added successfully",
-          product, 
+        success: true,
+        message: "Product added successfully",
       });
-  } catch (error) {
+    } catch (error) {
       console.error(error);
       res.status(400).json({
-          success: false,
-          message: "Product validation failed",
-          error: error.message,
+        success: false,
+        message: "Product validation failed",
+        error: error.message,
       });
-  }
-});
+    }
+  });
 
 app.get('/allproducts', async (req, res) => {
   try {

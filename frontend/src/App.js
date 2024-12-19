@@ -13,7 +13,7 @@ import ListProduct from './Pages/Admin/ListProduct/ListProduct';
 import UpdateProduct from './Pages/Admin/UpdateProduct/UpdateProduct';
 import Profile from './Pages/profile';
 import AllProduct from './Pages/AllProduct';
-
+import SingleItem from './Pages/SingleItem/SingleItem';
 function App() {
   return (
 
@@ -34,6 +34,7 @@ function App() {
            <Route path='/updateproduct' element={<UpdateProduct/>}/>
            <Route path="/profile" element={<Profile/>} />
            <Route path='/allproduct' element ={<AllProduct/>}/>
+           <Route path='/product/:productId' element={<SingleItem />} />
         </Routes> 
        </BrowserRouter>  
     </div>

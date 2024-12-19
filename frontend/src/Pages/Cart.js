@@ -1,124 +1,97 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from 'react';
 import "./CSS/Cart.css";
 
 const Cart = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track user login status
-  const [cartItems, setCartItems] = useState([
-    { id: 1, name: "Item 1", price: 10, quantity: 1 },
-    { id: 2, name: "Item 2", price: 15, quantity: 2 },
-  ]);
+  const [cartItems, setCartItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const handleRemove = (id) => {
-    setCartItems(cartItems.filter((item) => item.id !== id));
-  };
+  useEffect(() => {
+    const fetchCart = async () => {
+      try {
+        const token = localStorage.getItem('token'); 
+        const response = await fetch('http://localhost:4000/cart', {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-  const handleQuantityChange = (id, increment) => {
-    setCartItems(
-      cartItems.map((item) =>
-        item.id === id
-          ? { ...item, quantity: Math.max(1, item.quantity + increment) }
-          : item
-      )
-    );
-  };
+        const data = await response.json();
 
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-  };
+        if (response.ok) {
+          setCartItems(Object.values(data.cart || {})); 
+        } else {
+          console.error(data.message);
+        }
+      } catch (error) {
+        console.error('Error fetching cart:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-  };
+    fetchCart();
+  }, []);
 
-  const handleAddToCart = (item) => {
-    const exists = cartItems.find((cartItem) => cartItem.id === item.id);
-    if (exists) {
-      setCartItems(
-        cartItems.map((cartItem) =>
-          cartItem.id === item.id
-            ? { ...cartItem, quantity: cartItem.quantity + 1 }
-            : cartItem
-        )
-      );
-    } else {
-      setCartItems([...cartItems, { ...item, quantity: 1 }]);
+  const handleRemove = async (productId) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch('http://localhost:4000/delete/cart', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ productId }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setCartItems((prevItems) =>
+          prevItems.filter((item) => item.productId !== productId)
+        );
+        console.log(data.message);
+      } else {
+        console.error(data.message);
+      }
+    } catch (error) {
+      console.error('Error removing item from cart:', error);
     }
   };
 
-  const total = cartItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
-  );
-
   return (
     <div className="cart-container">
-      <h1 className="cart-title">Shopping Cart</h1>
-      <div className="login-container">
-        {isLoggedIn ? (
-          <button className="login-button" onClick={handleLogout}>
-            Logout
-          </button>
-        ) : (
-          <button className="login-button" onClick={handleLogin}>
-            Login
-          </button>
-        )}
-      </div>
-      {cartItems.length === 0 ? (
-        <p className="cart-empty-message">Your cart is empty.</p>
+      <h1 className="cart-title">Your Cart</h1>
+      {loading ? (
+        <p>Loading cart...</p>
+      ) : cartItems.length === 0 ? (
+        <p className="cart-empty">Your cart is empty.</p>
       ) : (
         <div className="cart-items">
-          <ul className="cart-list">
-            {cartItems.map((item) => (
-              <li key={item.id} className="cart-item">
-                <span className="cart-item-name">{item.name}</span>
-                <span className="cart-item-price">${item.price}</span>
-                <div className="cart-item-controls">
-                  <button
-                    className="quantity-button"
-                    onClick={() => handleQuantityChange(item.id, -1)}
-                    disabled={item.quantity === 1}
-                  >
-                    -
-                  </button>
-                  <span className="cart-item-quantity">{item.quantity}</span>
-                  <button
-                    className="quantity-button"
-                    onClick={() => handleQuantityChange(item.id, 1)}
-                  >
-                    +
-                  </button>
-                </div>
+          {cartItems.map((item) => (
+            <div className="cart-item" key={item.productId}>
+              <img
+                src={item.image}
+                alt={item.name}
+                className="cart-item-image"
+              />
+              <div className="cart-item-details">
+                <h2 className="cart-item-name">{item.name}</h2>
+                <p className="cart-item-price">Price: ${item.new_price}</p>
+                <p className="cart-item-category">
+                  Category: {item.category}
+                </p>
                 <button
-                  className="remove-button"
-                  onClick={() => handleRemove(item.id)}
+                  className="cart-item-remove"
+                  onClick={() => handleRemove(item.productId)}
                 >
                   Remove
                 </button>
-              </li>
-            ))}
-          </ul>
-          <h3 className="cart-total">Total: ${total}</h3>
+              </div>
+            </div>
+          ))}
         </div>
-      )}
-      {isLoggedIn ? (
-        <div className="add-items">
-          <h2>Products</h2>
-          <button
-            className="add-to-cart-button"
-            onClick={() => handleAddToCart({ id: 3, name: "Item 3", price: 20 })}
-          >
-            Add "Item 3" to Cart
-          </button>
-          <button
-            className="add-to-cart-button"
-            onClick={() => handleAddToCart({ id: 4, name: "Item 4", price: 30 })}
-          >
-            Add "Item 4" to Cart
-          </button>
-        </div>
-      ) : (
-        <p className="login-warning">Please login to add items to the cart.</p>
       )}
     </div>
   );

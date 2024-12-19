@@ -45,7 +45,14 @@ const Profile = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+  const handleLogout = () => {
+   
+    localStorage.removeItem("token");
+    localStorage.removeItem("email");
 
+   
+    
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -107,6 +114,9 @@ const Profile = () => {
             <button onClick={handleEditToggle}>
               {isEditing ? "Cancel" : "Edit Profile"}
             </button>
+            <button onClick={handleLogout} className="logout-button">
+      Logout
+    </button>
           </div>
           {isEditing && (
             <form onSubmit={handleSubmit}>

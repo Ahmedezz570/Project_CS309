@@ -166,138 +166,170 @@ app.put('/updateproduct', async (req, res) => {
         res.status(500).json({ message: 'Server error: ' + error.message });
     }
 });
-
 app.post('/add/cart', async (req, res) => {
-    try {
-        const { productId } = req.body;
-  
-        if (!productId) {
-            return res.status(400).json({ success: false, message: "Product ID is required" });
-        }
-  
-        const token = req.headers.authorization?.split(' ')[1];
-        if (!token) {
-            return res.status(401).json({ success: false, message: 'No token provided' });
-        }
-  
-        const secretKey = 'your_secret_key';
-        let decoded;
-        try {
-            decoded = jwt.verify(token, secretKey);
-        } catch (error) {
-            return res.status(401).json({ success: false, message: 'Invalid or expired token' });
-        }
-  
-        const { email } = decoded;
-        if (!email) {
-            return res.status(400).json({ success: false, message: 'Invalid token payload' });
-        }
-  
-        const user = await User.findOne({ email: email });
-        if (!user) {
-            return res.status(404).json({ success: false, message: `User with email "${email}" not found` });
-        }
-  
-        const product = await Product.findById(productId);
-        if (!product) {
-            return res.status(404).json({ success: false, message: `Product with ID "${productId}" not found` });
-        }
-  
-        if (!user.cart) {
-            user.cart = {};
-        }
-  
-        const nextKey = Object.keys(user.cart).length === 0
-        ? 0
-        : Math.max(...Object.keys(user.cart).map(Number)) + 1;
-  
-  
-        user.cart[nextKey] = {
-            productId: product._id,
-            name: product.name,
-            image: product.image,
-            category: product.category,
-            new_price: product.new_price,
-            old_price: product.old_price,
-            quantity: 1
-        };
-  
-        await user.save();
-  
-        res.status(200).json({
-            success: true,
-            message: 'Product added to cart successfully',
-            cart: user.cart
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({
-            success: false,
-            message: 'Server error: ' + error.message,
-        });
-    }
-  });
+  try {
+      const { productId } = req.body;
 
-  app.delete('/delete/cart', async (req, res) => {
-    try {
-        const { productId } = req.body;
-  
-        if (!productId) {
-            return res.status(400).json({ success: false, message: "Product ID is required" });
-        }
-  
-        const token = req.headers.authorization?.split(' ')[1];
-        if (!token) {
-            return res.status(401).json({ success: false, message: 'No token provided' });
-        }
-  
-        const secretKey = 'your_secret_key';
-        let decoded;
-        try {
-            decoded = jwt.verify(token, secretKey);
-        } catch (error) {
-            return res.status(401).json({ success: false, message: 'Invalid or expired token' });
-        }
-  
-        const { email } = decoded;
-        if (!email) {
-            return res.status(400).json({ success: false, message: 'Invalid token payload' });
-        }
-  
-        const user = await User.findOne({ email: email });
-        if (!user) {
-            return res.status(404).json({ success: false, message: `User with email "${email}" not found` });
-        }
-  
-        // Check if the product exists in the user's cart
-        const cartItem = Object.values(user.cart).find(item => item.productId.toString() === productId);
-        if (!cartItem) {
-            return res.status(404).json({ success: false, message: `Product with ID "${productId}" not found in cart` });
-        }
-  
-        // Remove the product from the cart
-        const updatedCart = Object.fromEntries(
-            Object.entries(user.cart).filter(([key, item]) => item.productId.toString() !== productId)
-        );
-  
-        user.cart = updatedCart;
-  
-        // Save the updated cart
-        await user.save();
-  
-        res.status(200).json({
-            success: true,
-            message: 'Product removed from cart successfully',
-            cart: user.cart
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({
-            success: false,
-            message: 'Server error: ' + error.message,
-        });
-    }
-  });
+      if (!productId) {
+          return res.status(400).json({ success: false, message: "Product ID is required" });
+      }
+
+      const token = req.headers.authorization?.split(' ')[1];
+      if (!token) {
+          return res.status(401).json({ success: false, message: 'No token provided' });
+      }
+
+      const secretKey = 'your_secret_key';
+      let decoded;
+      try {
+          decoded = jwt.verify(token, secretKey);
+      } catch (error) {
+          return res.status(401).json({ success: false, message: 'Invalid or expired token' });
+      }
+
+      const { email } = decoded;
+      if (!email) {
+          return res.status(400).json({ success: false, message: 'Invalid token payload' });
+      }
+
+      const product = await Product.findById(productId);
+      if (!product) {
+          return res.status(404).json({ success: false, message: `Product with ID "${productId}" not found` });
+      }
+
+      const existingItem = await User.findOneAndUpdate(
+          { 
+              email: email, 
+              'cart.productId': product._id 
+          },
+          { 
+              $inc: { 'cart.$.quantity': 1 } 
+          },
+          { new: true }
+      );
+
+      if (!existingItem) {
+          const newItem = {
+              productId: product._id,
+              name: product.name,
+              image: product.image,
+              category: product.category,
+              new_price: product.new_price,
+              old_price: product.old_price,
+              quantity: 1
+          };
+
+          const updatedUser = await User.findOneAndUpdate(
+              { email: email },
+              { $push: { cart: newItem } },
+              { new: true }
+          );
+
+          if (!updatedUser) {
+              return res.status(404).json({ success: false, message: `User with email "${email}" not found` });
+          }
+      }
+
+      const user = await User.findOne({ email: email });
+
+      res.status(200).json({
+          success: true,
+          message: 'Product added to cart successfully',
+          cart: user.cart
+      });
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({
+          success: false,
+          message: 'Server error: ' + error.message,
+      });
+  }
+});
+
+app.delete('/delete/cart', async (req, res) => {
+  try {
+      const { productId } = req.body;
+
+      if (!productId) {
+          return res.status(400).json({ success: false, message: "Product ID is required" });
+      }
+
+      const token = req.headers.authorization?.split(' ')[1];
+      if (!token) {
+          return res.status(401).json({ success: false, message: 'No token provided' });
+      }
+
+      const secretKey = 'your_secret_key';
+      let decoded;
+      try {
+          decoded = jwt.verify(token, secretKey);
+      } catch (error) {
+          return res.status(401).json({ success: false, message: 'Invalid or expired token' });
+      }
+
+      const { email } = decoded;
+      if (!email) {
+          return res.status(400).json({ success: false, message: 'Invalid token payload' });
+      }
+
+      const user = await User.findOne({ email: email });
+
+      if (!user) {
+          return res.status(404).json({ success: false, message: `User with email "${email}" not found` });
+      }
+
+      if (!user.cart || user.cart.length === 0) {
+          return res.status(404).json({ success: false, message: 'Cart is empty' });
+      }
+
+      const mongoose = require('mongoose');
+      const objectIdProductId = new mongoose.Types.ObjectId(productId);
+
+      const cartItem = user.cart.find(item => 
+          item.productId.toString() === objectIdProductId.toString()
+      );
+      
+      if (!cartItem) {
+          return res.status(404).json({ 
+              success: false, 
+              message: `Product with ID "${productId}" not found in cart` 
+          });
+      }
+
+      if (cartItem.quantity > 1) {
+          await User.findOneAndUpdate(
+              { 
+                  email: email,
+                  'cart.productId': objectIdProductId
+              },
+              { 
+                  $inc: { 'cart.$.quantity': -1 } 
+              }
+          );
+      } else {
+          await User.findOneAndUpdate(
+              { email: email },
+              { 
+                  $pull: { cart: { productId: objectIdProductId } }
+              }
+          );
+      }
+
+      const updatedUser = await User.findOne({ email: email });
+
+      return res.status(200).json({
+          success: true,
+          message: 'Product quantity decreased or removed from cart successfully',
+          cart: updatedUser.cart
+      });
+  } catch (error) {
+      console.error('Error in DELETE /delete/cart:', error);
+      return res.status(500).json({
+          success: false,
+          message: 'Server error: ' + error.message
+      });
+  }
+});  
 
   app.get('/user/:email', async (req, res) => {
   try {

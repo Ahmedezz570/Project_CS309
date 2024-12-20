@@ -70,3 +70,19 @@
     background-color: #1c1d1f;
     color: white;
 }
+.Review{
+    margin-top: 15px;
+    font-size: 16px;
+    color: #ffffff;
+    font-style: Basic;
+    display: flex;
+    justify-content: center;
+    align-items:center ;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #161818;
+    border-radius: 10px;
+    box-shadow: 30px 30px 30px rgba(71, 59, 59, 0.8);
+
+}

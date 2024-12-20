@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './SingleItem.css';
+import Reviews from '../reviews';
 
 const SingleItem = () => {
   const [products, setProducts] = useState([]);
@@ -11,13 +12,16 @@ const SingleItem = () => {
       .then((response) => response.json())
       .then((data) => setProducts(data))
       .catch((error) => console.error('Error fetching products:', error));
+
+    const token = localStorage.getItem('token');
+
   }, []);
 
   const product = products.find((e) => e.id === Number(productId));
 
   const AddToCart = async () => {
     try {
-      const token = localStorage.getItem('token'); 
+      const token = localStorage.getItem('token');
       if (!token) {
         alert('Please login');
         return;
@@ -27,9 +31,9 @@ const SingleItem = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`, 
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ productId: product._id }), 
+        body: JSON.stringify({ productId: product._id }),
       });
 
       const data = await response.json();
@@ -61,7 +65,9 @@ const SingleItem = () => {
           Add to cart
         </button>
       </div>
-    </div>
+      <div className='Review'>
+      <Reviews productId={productId} email={localStorage.getItem("email")} />
+    </div></div>
   );
 };
 

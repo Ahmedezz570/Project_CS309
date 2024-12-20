@@ -11,7 +11,7 @@ body {
     text-align: center;
     margin-bottom: 20px;
   }
-  button {
+  .button {
     background-color: #003366;
     color: white;
     border: none;
@@ -21,7 +21,19 @@ body {
     font-size: 16px;
   }
   
-  button:hover {
+  .button:hover {
+    background-color: #00509E;
+  }
+  .logout-button{
+    background-color: #003366;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  .logout-button:hover{
     background-color: #00509E;
   }
   

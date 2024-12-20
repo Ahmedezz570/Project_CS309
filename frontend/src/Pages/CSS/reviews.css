@@ -1,0 +1,92 @@
+.container {
+    align-items: center;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  justify-content: center;
+  }
+  
+  .title {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .stars {
+    display: inline-block;
+    color: #fff6f6; 
+  }
+  
+  .star {
+    font-size: 30px;
+    margin-right: 5px; 
+  }
+  
+  .star.filled {
+    color: #ffd700; 
+  }
+  
+  .reviewsList {
+    margin-bottom: 30px;
+    p{
+      color: #bab6ec;
+       margin-bottom: 10px;
+       font-size: 22px;
+    }
+    font-size: 30px;
+
+  }
+  
+  .reviewItem {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+  }
+  
+  .form1 {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: 1px solid #f5f5f5;
+    border-radius: 8px;
+    padding: 20px;
+    margin: auto;
+    background-color: #172033;
+  }
+  .input {
+    padding: 10px 20px;
+    font-size: 20px;
+    border: 1px solid #121116;
+    border-radius: 4px;
+  }
+  .textarea {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    height: 100px;
+  }
+
+  .button {
+    padding: 12px 24px; 
+    font-size: 18px; 
+    background-color: #007BFF; 
+    color: #fff; 
+    border: none;
+    border-radius: 6px; 
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    transition: all 0.3s ease; 
+    margin: auto;
+  }
+  
+  .button:hover {
+    background-color: #084b92; 
+    transform: scale(1.05); 
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .button:active {
+    transform: scale(1); 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+ 

@@ -1,6 +1,7 @@
-
 import React, { useState, useEffect } from "react";
 import "./CSS/profile.css";
+import { useNavigate } from 'react-router-dom'; 
+
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
@@ -10,7 +11,7 @@ const Profile = () => {
     fullName: "",
     phoneNumber: "",
   });
-
+  const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -50,8 +51,8 @@ const Profile = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("email");
 
-   
-    
+   navigate ('/login');
+  
   };
   const handleSubmit = (e) => {
     e.preventDefault();

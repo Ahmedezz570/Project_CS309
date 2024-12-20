@@ -512,57 +512,75 @@ app.post('/login', async (req, res) => {
         res.status(500).send('Server error: ' + error.message);
     }
 });
-app.get('/products/:productId/reviews', async (req, res) => {
+  
+  app.get('/products/:id/reviews', async (req, res) => {
+    const { id } = req.params;
+    console.log(id +" IIII ");
     try {
-      const { productId } = req.params;
-      const product = await Product.findOne({ productId });
-      if (!product) return res.status(404).json({ message: 'Product not found' });
-      res.json(product.reviews);
+        const product = await Product.findOne({ id: id });
+        if (!product) {
+            return res.status(404).json({ message: "Product not found" });
+        }else{
+        res.status(200).json({ reviews: product.reviews });}
     } catch (error) {
-      res.status(500).json({ message: 'Server error', error });
+        res.status(500).json({ message: "Error fetching reviews", error });
     }
   });
-  
-  app.post('/api/products/:productId/reviews', async (req, res) => {
+
+  app.post('/products/:id/reviews', async (req, res) => {
+    const { id } = req.params;
+    const { FullName, email, comment, rating } = req.body; 
     try {
-      const { productId } = req.params;
-      const { userId, username, comment, rating } = req.body;
-      let product = await Product.findOne({ productId });
-      if (!product) {
-        product = new Product({ productId, reviews: [] });
-      }
-      const newReview = {
-        userId,
-        username,
-        review: { comment, rating },
-      };
-      product.reviews.push(newReview);
-      await product.save();
-      res.status(201).json(newReview);
+        const product = await Product.findOne({ id: id });
+        if (!product) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+  
+        const existingReview = product.reviews.find(review => review.email === email);
+        if (existingReview) {
+            return res.status(400).json({ message: "You have already reviewed this product" });
+        }
+  
+        product.reviews.push({
+            FullName,
+            email,
+            comment,
+            rating,
+        });
+  
+        await product.save();
+        res.status(201).json({ message: "Review added successfully", product });
     } catch (error) {
-      res.status(500).json({ message: 'Failed to add review', error });
+        console.error(error);
+        res.status(500).json({ message: "Error adding review", error });
     }
   });
+  app.delete('/products/:id/reviews', async (req, res) => {
+    const { id } = req.params; 
+    const { email } = req.body; 
   
-  app.delete('/api/products/:productId/reviews/:reviewId', async (req, res) => {
     try {
-      const { productId, reviewId } = req.params;
-      const { userId } = req.body;
-      const product = await Product.findOne({ productId });
-      if (!product) return res.status(404).json({ message: 'Product not found' });
-      const review = product.reviews.id(reviewId);
-      if (!review) return res.status(404).json({ message: 'Review not found' });
-      if (review.userId !== userId) {
-        return res.status(403).json({ message: 'Not authorized to delete this review' });
-      }
-      review.remove();
-      await product.save();
-      res.json({ message: 'Review deleted successfully' });
+        const product = await Product.findOne({ id: id });
+        if (!product) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+  
+        const reviewIndex = product.reviews.findIndex(review => review.email === email);
+  
+        if (reviewIndex === -1) {
+            return res.status(404).json({ message: "Review not found for this email" });
+        }
+  
+        product.reviews.splice(reviewIndex, 1);
+  
+        await product.save();
+  
+        res.status(200).json({ message: "Review deleted successfully", product });
     } catch (error) {
-      res.status(500).json({ message: 'Failed to delete review', error });
+        console.error(error);
+        res.status(500).json({ message: "Error deleting review", error });
     }
   });
-  
 
 mongoose.connect("mongodb+srv://ahmedez570:987654321@cluster0.bf6fb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
     useNewUrlParser: true,

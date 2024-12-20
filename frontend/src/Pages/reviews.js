@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './CSS/reviews.css'; 
 
 const Reviews = ({ productId, email }) => {
-  const [reviews, setReviews] = useState([]); // التأكد من أن القيمة الافتراضية هي []
+  const [reviews, setReviews] = useState([]);
   const [formData, setFormData] = useState({
     FullName: '',
     email: email || '',
@@ -94,33 +94,9 @@ const Reviews = ({ productId, email }) => {
   };
 
   return (
-    <div className="container">
-      <h2 className="title">Customers Reviews</h2>
-
-      <div className="reviewsList">
-        {reviews.length === 0 ? (
-          <p>No reviews yet. Be the first to review!</p>
-        ) : (
-          reviews.map((review, index) => (
-            <div key={index} className="reviewItem">
-              <h4>Customer: {review.FullName}</h4>
-              <p><strong>Email:</strong> {review.email}</p>
-              <p><strong>Comment:</strong> {review.comment}</p>
-              <p><strong>Rating:</strong>{renderStars(review.rating)}</p>
-              {review.email === formData.email && (
-                <button 
-                  onClick={() => handleDeleteReview(review.email)} 
-                  className="button deleteButton"
-                >
-                  Delete 
-                </button>
-              )}
-            </div>
-          ))
-        )}
-      </div>
-
-      <form onSubmit={handleSubmit} className="form1">
+    <div className="containerREV">
+      
+      <form onSubmit={handleSubmit} className="form11">
         <h3>Add Your Review</h3>
         <input
           type="text"
@@ -163,8 +139,32 @@ const Reviews = ({ productId, email }) => {
           ))}
         </div>
 
-        <button type="submit" className="button">Submit Review</button>
+        <button type="submit" className="button_submit">Submit Review</button>
       </form>
+      <h2 className="title">Customers Reviews</h2>
+
+      <div className="reviewsList1">
+        {reviews.length === 0 ? (
+          <p>No reviews yet. Be the first to review!</p>
+        ) : (
+          reviews.map((review, index) => (
+            <div key={index} className="reviewItem">
+              <h4>Customer: {review.FullName}</h4>
+              <p className='commenttt'> Comment: {review.comment}</p>
+              <p>{renderStars(review.rating)}</p>
+              {review.email === formData.email && (
+                <button 
+                  onClick={() => handleDeleteReview(review.email)} 
+                  className="button-deleteButton"
+                >
+                  Delete 
+                </button>
+              )}
+            </div>
+          ))
+        )}
+      </div>
+
     </div>
   );
 };

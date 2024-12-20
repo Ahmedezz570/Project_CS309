@@ -515,7 +515,6 @@ app.post('/login', async (req, res) => {
   
   app.get('/products/:id/reviews', async (req, res) => {
     const { id } = req.params;
-    console.log(id +" IIII ");
     try {
         const product = await Product.findOne({ id: id });
         if (!product) {

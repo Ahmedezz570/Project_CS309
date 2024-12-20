@@ -1,4 +1,4 @@
-.container {
+.containerREV {
     align-items: center;
     max-width: 700px;
     margin: 0 auto;
@@ -20,14 +20,14 @@
     font-size: 30px;
     margin-right: 5px; 
   }
-  
+
   .star.filled {
     color: #ffd700; 
   }
   
-  .reviewsList {
+  .reviewsList1 {
     margin-bottom: 30px;
-    p{
+    .p{
       color: #bab6ec;
        margin-bottom: 10px;
        font-size: 22px;
@@ -38,10 +38,23 @@
   
   .reviewItem {
     border-bottom: 1px solid #ddd;
-    padding: 10px 0;
+    padding: 10px 20px;
+    color: #eee7e7;
   }
-  
-  .form1 {
+  .reviewItem p {
+    color: #e9dddd;
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  .commenttt{
+    color: #e9dddd;
+    font-size: 120px;
+    font-weight: 1000;
+    margin-bottom: 10px;
+  }
+
+  .form11 {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -49,13 +62,15 @@
     border-radius: 8px;
     padding: 20px;
     margin: auto;
-    background-color: #172033;
+    background-color: #0a101d;
   }
   .input {
     padding: 10px 20px;
     font-size: 20px;
     border: 1px solid #121116;
     border-radius: 4px;
+    color: #838383;
+    background-color: rgb(255, 255, 255);
   }
   .textarea {
     padding: 10px;
@@ -65,11 +80,11 @@
     height: 100px;
   }
 
-  .button {
+  .button_submit {
     padding: 12px 24px; 
     font-size: 18px; 
-    background-color: #007BFF; 
-    color: #fff; 
+    background-color: orange;
+    color: black;
     border: none;
     border-radius: 6px; 
     cursor: pointer;
@@ -78,15 +93,37 @@
     margin: auto;
   }
   
-  .button:hover {
-    background-color: #084b92; 
+  .button_submit:hover {
+    background-color: rgb(3, 3, 3); 
+    color: white;
     transform: scale(1.05); 
     box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
   }
   
-  .button:active {
+  .button_submit:active {
     transform: scale(1); 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   
+  .button-deleteButton{
+    padding: 12px 24px; 
+    font-size: 18px; 
+    background-color: orange;
+    color: black;
+    border: none;
+    border-radius: 6px; 
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    transition: all 0.3s ease; 
+    margin: auto;
+  }
+  .button-deleteButton:hover {
+    background-color: rgb(216, 17, 17); 
+    color: white;
+    transform: scale(1.05); 
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  }
+  .stars-rating{
+    cursor: pointer;
+  }
  

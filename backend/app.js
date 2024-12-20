@@ -329,7 +329,80 @@ app.delete('/delete/cart', async (req, res) => {
           message: 'Server error: ' + error.message
       });
   }
-});  
+});
+
+app.delete('/remove/cart', async (req, res) => {
+    try {
+        const { productId } = req.body;
+
+        if (!productId) {
+            return res.status(400).json({ success: false, message: "Product ID is required" });
+        }
+
+        const token = req.headers.authorization?.split(' ')[1];
+        if (!token) {
+            return res.status(401).json({ success: false, message: 'No token provided' });
+        }
+
+        const secretKey = 'your_secret_key';
+        let decoded;
+        try {
+            decoded = jwt.verify(token, secretKey);
+        } catch (error) {
+            return res.status(401).json({ success: false, message: 'Invalid or expired token' });
+        }
+
+        const { email } = decoded;
+        if (!email) {
+            return res.status(400).json({ success: false, message: 'Invalid token payload' });
+        }
+
+        const user = await User.findOne({ email: email });
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: `User with email "${email}" not found` });
+        }
+
+        if (!user.cart || user.cart.length === 0) {
+            return res.status(404).json({ success: false, message: 'Cart is empty' });
+        }
+
+        const mongoose = require('mongoose');
+        const objectIdProductId = new mongoose.Types.ObjectId(productId);
+
+        const cartItem = user.cart.find(item => 
+            item.productId.toString() === objectIdProductId.toString()
+        );
+        
+        if (!cartItem) {
+            return res.status(404).json({ 
+                success: false, 
+                message: `Product with ID "${productId}" not found in cart` 
+            });
+        }
+
+        await User.findOneAndUpdate(
+            { email: email },
+            { 
+                $pull: { cart: { productId: objectIdProductId } }
+            }
+        );
+
+        const updatedUser = await User.findOne({ email: email });
+
+        return res.status(200).json({
+            success: true,
+            message: 'Product removed from cart successfully',
+            cart: updatedUser.cart
+        });
+    } catch (error) {
+        console.error('Error in DELETE /remove/cart:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Server error: ' + error.message
+        });
+    }
+});
 
   app.get('/user/:email', async (req, res) => {
   try {

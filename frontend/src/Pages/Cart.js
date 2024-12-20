@@ -4,8 +4,12 @@ import "./CSS/Cart.css";
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [updateLoading, setUpdateLoading] = useState({});
 
   useEffect(() => {
+        fetchCart();
+  }, []);
+
     const fetchCart = async () => {
       try {
         const token = localStorage.getItem('token'); 
@@ -30,13 +34,68 @@ const Cart = () => {
       }
     };
 
-    fetchCart();
-  }, []);
+    const handleIncrement = async (productId) => {
+      try {
+        setUpdateLoading(prev => ({ ...prev, [productId]: true }));
+        const token = localStorage.getItem('token');
+        const response = await fetch('http://localhost:4000/add/cart', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ productId }),
+        });
+  
+        const data = await response.json();
+  
+        if (response.ok) {
+          setCartItems(Object.values(data.cart || {}));
+        } else {
+          console.error(data.message);
+        }
+      } catch (error) {
+        console.error('Error incrementing quantity:', error);
+      } finally {
+        setUpdateLoading(prev => ({ ...prev, [productId]: false }));
+      }
+    };
+  
+    const handleDecrement = async (productId, currentQuantity) => {
+      if (currentQuantity <= 1) {
+        return handleRemove(productId);
+      }
+  
+      try {
+        setUpdateLoading(prev => ({ ...prev, [productId]: true }));
+        const token = localStorage.getItem('token');
+        const response = await fetch('http://localhost:4000/delete/cart', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ productId }),
+        });
+  
+        if (response.ok) {
+          await fetchCart();
+        } else {
+          const data = await response.json();
+          console.error(data.message);
+        }
+      } catch (error) {
+        console.error('Error decrementing quantity:', error);
+      } finally {
+        setUpdateLoading(prev => ({ ...prev, [productId]: false }));
+      }
+    };
+
 
   const handleRemove = async (productId) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:4000/delete/cart', {
+      const response = await fetch('http://localhost:4000/remove/cart', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -58,6 +117,10 @@ const Cart = () => {
     } catch (error) {
       console.error('Error removing item from cart:', error);
     }
+  };
+
+  const calculateTotal = () => {
+    return cartItems.reduce((sum, item) => sum + item.new_price * item.quantity, 0);
   };
 
   return (
@@ -82,6 +145,24 @@ const Cart = () => {
                 <p className="cart-item-category">
                   Category: {item.category}
                 </p>
+                <p className="cart-item-quantity">Quantity: {item.quantity}</p>
+                <div className="quantity-controls">
+                  <button 
+                    className="quantity-btn"
+                    onClick={() => handleDecrement(item.productId, item.quantity)}
+                    disabled={updateLoading[item.productId]}
+                  >
+                    -
+                  </button>
+                  <span className="quantity-display">{item.quantity || 1}</span>
+                  <button 
+                    className="quantity-btn"
+                    onClick={() => handleIncrement(item.productId)}
+                    disabled={updateLoading[item.productId]}
+                  >
+                    +
+                  </button>
+                </div>                               
                 <button
                   className="cart-item-remove"
                   onClick={() => handleRemove(item.productId)}
@@ -91,6 +172,12 @@ const Cart = () => {
               </div>
             </div>
           ))}
+        </div>
+      )}
+      {cartItems.length > 0 && (
+        <div className="cart-total">
+          <p className="cart-total-label">Total:</p>
+          <p className="cart-total-amount">${calculateTotal()}</p>
         </div>
       )}
     </div>

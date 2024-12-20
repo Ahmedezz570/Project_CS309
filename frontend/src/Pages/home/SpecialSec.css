@@ -1,0 +1,141 @@
+.special_pro{
+    margin-top: 8%;
+}
+.contain{
+   display: flex;
+   position: relative;
+   align-items: center;
+}
+.spec-text h3{
+    text-transform:uppercase;
+    font-size: xx-large;
+    margin-bottom: 17%;
+} 
+.spec-text{
+    width: 281%;
+}
+.abs-p{
+    position: absolute;
+    font-size: 95px;
+    top: 9px;
+    left: 37px;
+    color: gray;
+    opacity: 0.3;
+    text-transform: uppercase;
+}
+.sm-card{
+width: 30%;
+}
+.sm-card img{
+    width: 69%;
+}
+.pricee{
+    display: inline-block;
+    margin-right: 11px;
+    margin-top: 10px;
+    color: #cf0000;
+    font-size: 21px;
+    font-family: fantasy;
+}
+del{
+    font-size: 13px;
+    color: #706363;
+}
+.sm-card .name{
+    margin: 3px 1px;
+    text-transform: capitalize;
+    font-size: 21px;
+    font-family: cursive;
+    font-weight: 800;
+}
+.products{
+    display: flex   ;
+        justify-content: end;
+}
+.sec-card{
+  border-right: 1px solid;
+  border-left: 1px solid;
+}
+/* Responsive Styles */
+
+/* For screens smaller than 1024px (tablet and small desktop) */
+@media (max-width: 1024px) {
+    .spec-text h3 {
+        font-size: 2rem;  /* Reduce font size */
+        margin-bottom: 5%;
+    }
+
+    .spec-text {
+        width: 60%;  /* Adjust width to fit better on smaller screens */
+        padding-right: 5%;  /* Add some spacing on the right */
+    }
+
+    .products {
+        justify-content: center; /* Align the products centrally */
+        margin-top: 5%;  /* Add some spacing above the product cards */
+    }
+
+    .sm-card {
+        width: 45%;  /* Reduce card width to fit more neatly */
+        margin-bottom: 10px; /* Space between cards */
+    }
+}
+
+/* For screens smaller than 768px (tablets and larger phones) */
+@media (max-width: 768px) {
+    .spec-text h3 {
+        font-size: 1.8rem;  /* Make the heading smaller */
+        margin-bottom: 5%;  /* Adjust bottom margin */
+    }
+    .abs-p{
+        display: none;
+    }
+
+    .sec-card{
+        border-right:0px ;
+        border-left:0px ;
+        border-top:1px solid;
+        border-bottom:1px solid ;
+        padding: 30px 0px; 
+    }
+    .spec-text {
+        width: 70%;  /* More space for text */
+       margin: auto; /* Ensure text spacing is good */
+    }
+
+    /* Stack the cards below the text */
+    .products {
+        flex-direction: column;  /* Stack the product cards vertically */
+        align-items: center;  /* Center the cards vertically */
+        gap: 20px;  /* Add spacing between stacked cards */
+    }
+
+    .sm-card {
+        width: 80%;  /* Make the cards larger on smaller screens */
+    }
+    .contain{
+        display: block;
+    }
+}
+
+/* For very small screens (mobile phones) */
+@media (max-width: 480px) {
+    .spec-text h3 {
+        font-size: 1.5rem;  /* Further reduce the font size */
+        margin-bottom: 4%;
+    }
+
+    .spec-text {
+        width: 90%;  /* Ensure text takes up most of the screen */
+        margin-bottom: 10px; /* Space between text and cards */
+    }
+
+    .sm-card {
+        width: 90%;  /* Make the cards almost full-width */
+        margin-bottom: 15px; /* Add more space between cards */
+    }
+
+    .products {
+        margin-top: 10%;  /* Space between text and products */
+    }
+}

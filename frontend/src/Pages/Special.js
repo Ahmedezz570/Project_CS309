@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './CSS/Special.css';
+import Navbar from '../Components/NavBar/Navbar';
 import SearchBar from './SearchBar'; 
 import { Link } from 'react-router-dom'; 
 
@@ -21,7 +22,7 @@ const Special = () => {
 
   return (
     <div className="all-products-container">
-     
+     <Navbar/>
       <SearchBar
         placeholder="Search by your product name ......"
         searchTerm={searchTerm}

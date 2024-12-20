@@ -1,0 +1,90 @@
+/* Section with background image */
+.img-sec {
+    background-image: url('../../Components/Assets/c7ba1cabe9bde317db7b00e8759f87cb.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    height: 700px;
+    margin-top: 6%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Content inside the section */
+.content {
+    background-color: rgba(0, 0, 0, 0.63);
+    color: white;
+    text-align: center;
+    padding: 16.5rem 5%;
+    border-radius: 10px;
+    /* max-width: 80%; */
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* Heading style */
+.content h2 {
+    margin: 20px 0;
+    font-size: 4rem; /* Adjust size for readability */
+    font-family: 'DM Sans', sans-serif;
+    font-weight: bold; /* Make heading stand out */
+    line-height: 1.2; /* Make text more readable */
+}
+
+/* Paragraph style */
+.content p {
+    font-size: 1.8rem;
+    text-transform: capitalize;
+    margin-bottom: 20px;
+}
+
+/* Button style */
+.content a {
+    padding: 12px 25px;
+    background: #cf8600;
+    text-transform: uppercase;
+    color: white;
+    font-family: sans-serif;
+    text-decoration: none;
+    border-radius: 5px; /* Rounded corners on button */
+    transition: background-color 0.3s ease;
+}
+
+.content a:hover {
+    background: #f0a500; /* Slightly brighter color on hover */
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 768px) {
+    .img-sec {
+        height: 500px; /* Reduce height for mobile screens */
+    }
+
+    .content h2 {
+        font-size: 2.5rem; /* Smaller font size on mobile */
+    }
+
+    .content p {
+        font-size: 1.4rem; /* Smaller text for mobile */
+    }
+
+    .content a {
+        padding: 10px 20px;
+        font-size: 1rem; /* Adjust font size for button */
+    }
+
+
+    .content {
+        padding: 11.5rem 5%;/* Reduce padding on smaller screens */
+    } 
+
+}
+
+
+/* Further adjustments for very small screens like portrait mobile */
+/* @media (max-width: 480px) {
+    .content {
+        padding: 11.5rem 4%;  Even smaller padding for small phones 
+    }
+} */

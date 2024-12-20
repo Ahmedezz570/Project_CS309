@@ -2,11 +2,20 @@ import React, { useState } from 'react';
 import './Navbar.css';
 
 const Navbar = ({ isLoggedIn, handleLogin, handleLogout }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
   return (
     <nav className="navbar">
       <h1>Striker</h1>
-      <ul className="navbar-links">
+      <button className="hamburger" onClick={toggleMenu}>
+        ☰
+      </button>
+      <ul className={`navbar-links ${isMenuOpen ? "show" : ""}`}>
         <li><a href="/">Home</a></li>
+        <li><a href="/allproduct">Products</a></li>
         <li><a href="/special">Special</a></li>
         <li><a href="/tranning">Training</a></li>
         {isLoggedIn ? (
@@ -21,7 +30,7 @@ const Navbar = ({ isLoggedIn, handleLogin, handleLogout }) => {
         ) : (
           <>
             <li><a href="/login">Login</a></li>
-            <li><a href="/register">Register</a></li>
+            <li><a href="/cart"><i class="fa-solid fa-cart-shopping"></i></a></li>
           </>
         )}
       </ul>

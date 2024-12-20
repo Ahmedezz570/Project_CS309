@@ -1,8 +1,12 @@
 import React from 'react'
 import './CSS/Tranning.css';
+import Navbar from '../Components/NavBar/Navbar';
 const Tranning = () => {
-    return (
-      <div>Products</div>
+    return (<>
+    
+    <Navbar/>
+    <div>Products</div>
+    </>
     )
   }
   

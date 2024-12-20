@@ -1,0 +1,35 @@
+.final {
+    margin-top: 10%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center; /* Center the images vertically */
+    flex-wrap: wrap; /* Ensure images wrap on smaller screens */
+    padding: 23px 45px;
+    border-radius: 13px;
+    /* background-color: #f8f88; Light background for contrast */
+}
+
+/* Styling for the images */
+.final img {
+    max-width: 120px; /* Ensure images don't get too large */
+    margin: 10px;
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth transition for hover */
+}
+
+.final img:hover {
+    opacity: 0.6;
+    transform: scale(1.1); /* Slight zoom effect on hover */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .final {
+        flex-direction: column; /* Stack images vertically on smaller screens */
+        align-items: center; /* Center images */
+    }
+
+    .final img {
+        max-width: 100px; /* Reduce image size for mobile */
+        margin: 10px 0; /* Adjust margin for stacking */
+    }
+}

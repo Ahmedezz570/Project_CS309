@@ -1,0 +1,83 @@
+.logos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Dynamic columns for responsiveness */
+    gap: 20px; /* Add space between grid items */
+    margin: 8% 0 13%;
+    padding: 0 5%; /* Add padding for better alignment on smaller screens */
+}
+
+.logo {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Align content to the left */
+    background-color: white; /* Add a background for clarity */
+    padding: 15px 20px; /* Add some padding */
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for elevation */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+}
+
+.logo:hover {
+    transform: translateY(-5px); /* Hover effect */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Enhance shadow */
+}
+
+.logo p {
+    width: 75%; /* Slightly reduce width for better alignment */
+    margin: 0; /* Remove unnecessary auto margin */
+    color: #555; /* Softer text color */
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.logo i {
+    font-size: 33px;
+    color: #3498db; 
+    margin-right: 15px; 
+    transition: color 0.5s ease-in-out 
+    transform 0.2s ease-in-out ;
+}
+
+
+.logo h3 {
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+
+.logos::after {
+    content: "";
+    width: 225%;
+    background-color: #00000078;
+    height: 4px;
+    margin: 29% 37% -17%;
+    
+}
+.logo i:hover{
+    color: orange;
+    transform: translateY(-5px);
+}
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .logo {
+        flex-direction: column; /* Stack content vertically */
+        align-items: center; /* Center-align for smaller screens */
+        text-align: center; /* Center-align text */
+    }
+
+    .logo i {
+        margin-right: 0; /* Remove horizontal spacing */
+        margin-bottom: 10px; /* Add vertical spacing */
+    }
+
+    .logo p {
+        width: 100%; /* Use full width */
+    }
+
+    .logos::after {
+        width: 80%;
+        margin: 14% 12% -1%; /* Adjust line width for smaller screens */
+    }
+}

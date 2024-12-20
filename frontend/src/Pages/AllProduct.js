@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './CSS/AllProduct.css';
 import SearchBar from './SearchBar'; 
 import Item from './Item/Item';
+import Navbar from '../Components/NavBar/Navbar';
 
 const AllProduct = () => {
  
@@ -22,7 +23,7 @@ const AllProduct = () => {
 
   return (
     <div className="all-products-container">
-     
+     <Navbar/>
       <SearchBar
         placeholder="Search by category ......"
         searchTerm={searchTerm}

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./CSS/Register.css";
 import { Link, useNavigate } from "react-router-dom";
+import Navbar from "../Components/NavBar/Navbar";
+import Footer from "../Components/Footer/Footer";
 
 const Register = () => {
   const [fullName, setFullname] = useState("");
@@ -27,8 +29,8 @@ const Register = () => {
       .then((data) => {
         console.log(data);
         if (data.success) {
-          alert("Registration successful! You can now log in.");
-          navigate("/login");  // توجيه المستخدم إلى صفحة تسجيل الدخول بعد التسجيل
+          alert("Registration successful! ");
+          navigate("/");  
         } else {
           alert("Registration failed: " + data.message);
         }
@@ -40,6 +42,8 @@ const Register = () => {
   };
 
   return (
+    <>
+    <Navbar />
     <div className="register-container">
       <h1 className="register-title">Register</h1>
       <form onSubmit={handleSubmit} className="register-form" autoComplete="off">
@@ -98,6 +102,8 @@ const Register = () => {
         </div>
       </form>
     </div>
+<Footer />
+    </>
   );
 };
 

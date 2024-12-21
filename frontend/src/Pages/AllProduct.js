@@ -3,6 +3,7 @@ import './CSS/AllProduct.css';
 import SearchBar from './SearchBar'; 
 import Item from './Item/Item';
 import Navbar from '../Components/NavBar/Navbar';
+import Footer from '../Components/Footer/Footer';
 
 const AllProduct = () => {
  
@@ -40,7 +41,7 @@ const AllProduct = () => {
           />
         ))}
       </div>
-      
+      <Footer />
     </div>
   );
 };

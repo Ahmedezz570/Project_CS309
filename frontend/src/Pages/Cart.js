@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import "./CSS/Cart.css";
+import Navbar from '../Components/NavBar/Navbar';
+import Footer from '../Components/Footer/Footer';
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -124,6 +126,9 @@ const Cart = () => {
   };
 
   return (
+
+    <>
+    <Navbar />
     <div className="cart-container">
       <h1 className="cart-title">Your Cart</h1>
       {loading ? (
@@ -181,6 +186,8 @@ const Cart = () => {
         </div>
       )}
     </div>
+       <Footer />
+    </>
   );
 };
 

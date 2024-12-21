@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './CSS/Login.css';
 import { Link, useNavigate } from 'react-router-dom';
+import Navbar from '../Components/NavBar/Navbar';
+import Footer from '../Components/Footer/Footer';
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -34,7 +36,7 @@ const Login = () => {
           }
          else {
   
-          navigate("/profile"); }
+          navigate("/"); }
         } 
         
       })
@@ -45,10 +47,12 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
-      <h1 className="login-title">Login</h1>
-      <form className="login-form" onSubmit={handleSubmit}>
-        <div className="form-group">
+    <>
+    <Navbar />
+    <div className="logincontainer">
+      <h1 className="logintitle">Login</h1>
+      <form className="loginform" onSubmit={handleSubmit}>
+        <div className="formgroup">
           <label htmlFor="email" className="form-label">Email:</label>
           <input
             type="email"  
@@ -60,7 +64,7 @@ const Login = () => {
             required
           />
         </div>
-        <div className="form-group">
+        <div className="formgroup">
           <label htmlFor="password" className="form-label">Password:</label>
           <input
             type="password"
@@ -72,13 +76,14 @@ const Login = () => {
             required
           />
         </div>
-        <button type="submit" className="login-button">Login</button>
-        <div className="login-links">
-          <Link to="/forgot-password" className="forgot-password-link">Forgot Password?</Link>
-          <Link to="/register" className="register-link">Don't have an account?</Link>
+        <button type="submit" className="loginbutton">Login</button>
+        <div className="loginlinks">
+          <Link to="/register" >Don't have an account?</Link>
         </div>
       </form>
     </div>
+    <Footer />
+    </>
   );
 };
 export default Login;

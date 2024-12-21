@@ -3,6 +3,7 @@ import './CSS/Special.css';
 import Navbar from '../Components/NavBar/Navbar';
 import SearchBar from './SearchBar'; 
 import { Link } from 'react-router-dom'; 
+import Footer from '../Components/Footer/Footer';
 
 const Special = () => {
   const [products, setProducts] = useState([]); 
@@ -47,7 +48,7 @@ const Special = () => {
           </div>
         ))}
       </div>
-      
+      <Footer />
     </div>
   );
 };

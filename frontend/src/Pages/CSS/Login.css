@@ -1,5 +1,3 @@
-/* login.css */
-
 body {
     font-family: Arial, sans-serif;
     background-color: #f2f2f2;
@@ -7,7 +5,7 @@ body {
     padding: 0;
 }
 
-.login-container {
+.logincontainer {
     width: 100%;
     max-width: 400px;
     margin: 100px auto;
@@ -17,28 +15,45 @@ body {
     border-radius: 8px;
 }
 
-.login-container h2 {
+.logintitle {
     text-align: center;
     margin-bottom: 20px;
     color: #333;
+    margin-right: 30px;
 }
 
-.login-container form {
+.loginform {
     display: flex;
     flex-direction: column;
 }
 
-.login-container input[type="text"],
-.login-container input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+.formgroup {
+    margin-bottom: 15px;
 }
 
-.login-container button {
+.form-label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    display: block;
+    color: #555;
+}
+
+.form-input {
     width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+}
+
+.loginbutton {
+    /* width: 100%; */
     padding: 10px;
     background-color: #4CAF50;
     color: white;
@@ -46,31 +61,34 @@ body {
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
+    transition: background-color 0.3s ease;
 }
 
-.login-container button:hover {
+.loginbutton:hover {
     background-color: #45a049;
 }
 
-.login-container .error-message {
+.error-message {
     color: red;
     margin-top: 10px;
     text-align: center;
+    font-size: 14px;
 }
 
-.login-links {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.loginlinks {
+    text-align: center;
     margin-top: 20px;
+    margin-left: 20px;
 }
 
-.login-links a {
+.loginlinks a {
     color: #4CAF50;
     text-decoration: none;
+    font-size: 14px;
     margin: 5px 0;
+    display: inline-block;
 }
 
-.login-links a:hover {
+.loginlinks a:hover {
     text-decoration: underline;
 }

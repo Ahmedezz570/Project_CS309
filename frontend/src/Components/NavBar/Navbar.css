@@ -1,9 +1,6 @@
-
-
 li a{
     text-decoration: none;
     color: white;
-   
 }
 ul{
     list-style: none;
@@ -18,16 +15,12 @@ ul{
     position: absolute;
     height: 100%;
     width: 100%;
-    /* overflow: hidden; */
-    
 }
 .abs-div{
 position: relative;
 height: 660px;
 }
-
 .navbar {
-    /* position: absolute; */
     width: 90%;
     left: 3%;
     background-color: #292B26;
@@ -38,7 +31,6 @@ height: 660px;
     padding: 23px 28px;
     border-radius: 16px;
   }
-
  nav h1{
     color: white;
     text-transform: capitalize;
@@ -60,23 +52,21 @@ height: 660px;
     border: none;
     cursor: pointer;
   }
-  
-  /* Mobile styles */
   @media (max-width: 768px) {
     .hamburger {
       display: block;
     }
     .nav-sec {
-        background-size: contain; /* Adjust the image size for smaller screens */
-        height: auto; /* Allows dynamic height */
+        background-size: contain; 
+        height: auto; 
     }
   
     .navbar-links {
-      display: none; /* Hide links by default */
+      display: none;
       flex-direction: column;
       background-color: #292B26;
       position: absolute;
-      top: 100%; /* Positioned below the navbar */
+      top: 100%; 
       left: 0;
       width: 100%;
       padding: 10px 0;
@@ -85,16 +75,13 @@ height: 660px;
     .navbar{
         position: static;
     }
-  
     .navbar-links.show {
-      display: flex; /* Show links when toggled */
+      display: flex; 
     }
-  
     .navbar-links li {
       margin: 10px 0;
       text-align: center;
     }
-  
     .navbar-links li a {
       font-size: 1rem;
     }

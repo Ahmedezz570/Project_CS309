@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./CSS/profile.css";
 import { useNavigate } from 'react-router-dom'; 
+import Navbar from "../Components/NavBar/Navbar";
+import Footer from "../Components/Footer/Footer";
 
 
 const Profile = () => {
@@ -46,14 +48,7 @@ const Profile = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  const handleLogout = () => {
-   
-    localStorage.removeItem("token");
-    localStorage.removeItem("email");
-
-   navigate ('/login');
-  
-  };
+ 
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -91,6 +86,8 @@ const Profile = () => {
   }
 
   return (
+    <>
+    <Navbar />
     <div className="profile-container">
       <h1>Profile</h1>
       <div className="profile-details">
@@ -115,9 +112,7 @@ const Profile = () => {
             <button onClick={handleEditToggle}>
               {isEditing ? "Cancel" : "Edit Profile"}
             </button>
-            <button onClick={handleLogout} className="logout-button">
-      Logout
-    </button>
+           
           </div>
           {isEditing && (
             <form onSubmit={handleSubmit}>
@@ -145,6 +140,8 @@ const Profile = () => {
         </div>
       </div>
     </div>
+    <Footer />
+    </>
   );
 };
 

@@ -90,3 +90,50 @@ body {
     text-align: center;
     font-size: 14px;
 }
+.required-star {
+    color: red;
+    margin-left: 5px;
+    font-size: 14px; 
+}
+
+.confirm-password-input {
+    width: 100%; 
+    padding: 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+    box-sizing: border-box; 
+    margin-left: 25px; 
+}
+
+.confirm-password-input:focus {
+    outline: none;
+    border-color: #4CAF50; 
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.3); 
+}
+.password-requirements {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #666;
+  }
+  .password-requirements {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-left: 4px solid #007bff;
+    font-size: 14px;
+    color: #333;
+    border-radius: 5px;
+    list-style-type: none;
+  }
+  
+  .password-requirements li {
+    margin-bottom: 5px;
+  }
+  
+  .password-requirements li:before {
+    content: "✔";
+    margin-right: 8px;
+    color: #007bff;
+    font-weight: bold;
+  }
+  

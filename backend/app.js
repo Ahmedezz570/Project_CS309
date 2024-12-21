@@ -506,7 +506,6 @@ const validatePassword = (password) => {
         minLowercase: 1,
         minUppercase: 1,
         minNumbers: 1,
-        minSymbols: 1,
         maxLength: 50
     };
 
@@ -530,14 +529,6 @@ const validatePassword = (password) => {
 
     if ((password.match(/[0-9]/g) || []).length < validationRules.minNumbers) {
         errors.push('Password must contain at least one number');
-    }
-
-    if ((password.match(/[!@#$%^&*(),.?":{}|<>]/g) || []).length < validationRules.minSymbols) {
-        errors.push('Password must contain at least one special character');
-    }
-
-    if (/(.)\1{2,}/.test(password)) {
-        errors.push('Password cannot contain repeating characters (e.g., "aaa")');
     }
 
     if (/^[0-9]*$/.test(password)) {

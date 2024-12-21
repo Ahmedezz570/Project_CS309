@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './Components/NavBar/Navbar';
 import Shop from './Pages/home/Shop';
 import Special from './Pages/Special';
+import National from './Pages/national';
 import Tranning from './Pages/Tranning';
 import Cart from './Pages/Cart';
 import Login from './Pages/Login';
@@ -14,6 +15,7 @@ import UpdateProduct from './Pages/Admin/UpdateProduct/UpdateProduct';
 import Profile from './Pages/profile';
 import AllProduct from './Pages/AllProduct';
 import SingleItem from './Pages/SingleItem/SingleItem';
+
 function App() {
   return (
 
@@ -24,6 +26,7 @@ function App() {
         <Routes>
            <Route path="/" element={<Shop />} />
           <Route path="/special" element={<Special />} />
+          <Route path="/national" element={<National />} />
           <Route path="/tranning" element={<Tranning />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Login />} />

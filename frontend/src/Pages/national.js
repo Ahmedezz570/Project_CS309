@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import './CSS/Tranning.css';
+import './CSS/national.css';
 import SearchBar from './SearchBar'; 
 import { Link } from 'react-router-dom'; 
 
-const Tranning = () => {
+const National = () => {
   const [products, setProducts] = useState([]); 
   const [searchTerm, setSearchTerm] = useState('');
   useEffect(() => {
-    fetch('http://localhost:4000/products/tranning') 
+    fetch('http://localhost:4000/products/national') 
       .then((response) => response.json())
       .then((data) => setProducts(data))
       .catch((error) => console.error('Error fetching products:', error));
@@ -51,4 +51,4 @@ const Tranning = () => {
   );
 };
 
-export default Tranning;
+export default National;

@@ -35,16 +35,12 @@ const Special = () => {
         {filteredProducts.map((product, index) => (
 
           <div className="one-card" key={index}>
-               <div className="name">
-              <p>{product.name}</p> 
-            </div>
+              
             <img src={product.image } alt={product.name || 'Product'} />
             <div className="text">
-            <Link to={`/products/${product._id}`}> View </Link>
+            <Link to={`/product/${product.id}`}> View product  </Link>
             </div>
-            <div className="price">
-              <p>${product.new_price}</p> 
-            </div>
+             
           </div>
         ))}
       </div>

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './CSS/Tranning.css';
+import Navbar from '../Components/NavBar/Navbar';
 import SearchBar from './SearchBar'; 
 import { Link } from 'react-router-dom'; 
+import Footer from '../Components/Footer/Footer';
 
 const Tranning = () => {
   const [products, setProducts] = useState([]); 
@@ -21,7 +23,8 @@ const Tranning = () => {
 
   return (
     <div className="all-products-container">
-     
+          <Navbar/>
+
       <SearchBar
         placeholder="Search by your product name ......"
         searchTerm={searchTerm}
@@ -33,20 +36,17 @@ const Tranning = () => {
         {filteredProducts.map((product, index) => (
 
           <div className="one-card" key={index}>
-               <div className="name">
-              <p>{product.name}</p> 
-            </div>
+               
             <img src={product.image } alt={product.name || 'Product'} />
             <div className="text">
-            <Link to={'/products/${product._id}'}> View </Link>
+            <Link to={`/product/${product.id}`}> View product  </Link>
             </div>
-            <div className="price">
-              <p>${product.new_price}</p> 
-            </div>
+            
           </div>
         ))}
       </div>
-      
+      <Footer />
+
     </div>
   );
 };
